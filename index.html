@@ -8,134 +8,121 @@
         :root {
             --fenz-red: #d42027;
             --fenz-yellow: #ffed00;
+            --dark-bg: #1a1a1a;
         }
+
+        * { box-sizing: border-box; }
 
         body, html {
             margin: 0;
             padding: 0;
-            background-color: #1a1a1a; /* Base dark color */
+            background-color: var(--dark-bg);
             color: white;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
-        /* --- HEADER --- */
+        /* --- HEADER & LOGO --- */
         .header-main {
             position: absolute;
             top: 0;
             width: 100%;
             display: flex;
             justify-content: space-between;
-            padding: 20px 5%;
-            z-index: 10;
+            align-items: flex-start;
+            padding: 30px 5%;
+            z-index: 100;
         }
 
         .logo-box {
             background-color: var(--fenz-red);
-            border-bottom: 5px solid var(--fenz-yellow);
-            width: 180px;
-            height: 70px;
+            border-bottom: 6px solid var(--fenz-yellow);
+            width: 200px;
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 10px;
         }
 
-        /* --- HERO --- */
+        .logo-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .emergency-contact {
+            text-align: right;
+            line-height: 1;
+        }
+
+        .emergency-label {
+            font-size: 0.9rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .emergency-number {
+            font-size: 2.5rem;
+            color: var(--fenz-yellow);
+            font-weight: 900;
+        }
+
+        /* --- HERO SECTION --- */
         .hero {
+            position: relative;
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Background image with dark overlay to make text pop */
+            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), 
                         url('https://www.fireandemergency.nz/assets/Uploads/FENZ-House_Burn_Levin-Hass_0084.jpg');
             background-size: cover;
             background-position: center;
-            display: flex;
-            align-items: center;
-            padding: 0 10%;
+            border-bottom: 12px solid var(--fenz-red);
         }
 
-        .hero-content {
+        .hero-container {
+            width: 90%;
+            max-width: 1400px;
             display: flex;
             justify-content: space-between;
-            width: 100%;
             align-items: center;
         }
 
         .hero-text h1 {
-            font-size: 5rem;
-            line-height: 0.9;
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            line-height: 0.85;
             margin: 0;
+            font-weight: 900;
             text-transform: uppercase;
+            letter-spacing: -2px;
         }
 
-        .btn-skew {
-            background: var(--fenz-yellow);
-            color: black;
-            padding: 15px 30px;
-            text-decoration: none;
-            font-weight: bold;
+        .btn-safety {
             display: inline-block;
-            margin-top: 20px;
-            transform: skewX(-15deg);
-        }
-
-        /* --- MENU --- */
-        .quick-links a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-align: right;
-        }
-
-        .quick-links a:hover { color: var(--fenz-yellow); }
-
-        /* --- SAFETY SECTION --- */
-        .safety-page {
-            background-color: white;
+            margin-top: 40px;
+            background-color: var(--fenz-yellow);
             color: black;
-            padding: 100px 10%;
-            text-align: center;
+            padding: 18px 40px;
+            font-weight: 900;
+            text-decoration: none;
+            text-transform: uppercase;
+            transform: skewX(-15deg);
+            transition: 0.2s;
         }
 
-        .banner {
-            background-color: var(--fenz-red);
-            color: white;
-            padding: 50px;
-            text-transform: uppercase;
-            
-    <header class="header-main">
-        <div class="logo-box">
-            <img src="FIRE%20AND%20EMERGENCY%20LOGO%201.png" alt="FENZ" style="max-width: 150px; height: auto;">
-        </div>
-        
-        <div style="text-align: right; color: white; font-weight: bold; line-height: 1.2;">
-            <span style="font-size: 0.8rem; letter-spacing: 1px;">EMERGENCIES</span><br>
-            <span style="font-size: 2.2rem; color: var(--fenz-yellow);">CALL 111</span>
-        </div>
-    </header>
+        .btn-safety span {
+            display: inline-block;
+            transform: skewX(15deg);
+        }
 
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>LIVES<br>DEPEND<br>ON IT.</h1>
-                <a href="#safety" class="btn-skew">SAFETY ADVICE</a>
-            </div>
-            <div class="quick-links">
-                <a href="#safety">Smoke Alarms</a>
-                <a href="#">Incidents</a>
-                <a href="#">Key Documents</a>
-                <a href="#">Fleet</a>
-            </div>
-        </div>
-    </section>
+        .btn-safety:hover {
+            background-color: white;
+            padding-left: 50px;
+        }
 
-    <section id="safety" class="safety-page">
-        <div class="banner">
-            <h2>Smoke Alarms Save Lives</h2>
-        </div>
-        <p style="margin-top: 30px; font-size: 1.2rem;">Working smoke alarms are the only way to wake up to fire. Test them monthly.</p>
-    </section>
-
-</body>
-</html>
+        /* --- QUICK LINKS MENU
