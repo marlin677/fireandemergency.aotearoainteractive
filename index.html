@@ -9,6 +9,7 @@
             --fenz-red: #d42027;
             --fenz-yellow: #ffed00;
             --dark-bg: #1a1a1a;
+            --slate-bg: #111a2e;
         }
 
         * { box-sizing: border-box; }
@@ -39,7 +40,6 @@
             width: 350px; 
             display: flex;
             align-items: center;
-            justify-content: flex-start;
         }
 
         .logo-box img {
@@ -115,6 +115,8 @@
             text-transform: uppercase;
             transition: 0.2s;
             font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-safety:hover {
@@ -122,10 +124,10 @@
             transform: scale(1.05);
         }
 
-        /* --- UPDATED MENU SECTION --- */
+        /* --- MENU SECTION --- */
         .quick-links {
             text-align: left;
-            border-left: 3px solid var(--fenz-red); /* Changed to red for emphasis */
+            border-left: 3px solid var(--fenz-red);
             padding-left: 30px;
         }
 
@@ -145,15 +147,51 @@
             font-size: 1.6rem;
             font-weight: 700;
             margin-bottom: 12px;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.3s;
             text-transform: uppercase;
         }
 
-        /* This makes the links move slightly when you hover over them */
         .quick-links a:hover {
             color: var(--fenz-yellow);
             padding-left: 15px;
             border-left: 4px solid var(--fenz-yellow);
+        }
+
+        /* --- NEW SCROLL SECTION: FACTS --- */
+        .facts-section {
+            background-color: var(--slate-bg);
+            padding: 80px 4%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .facts-container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .fact-card {
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            border-top: 4px solid var(--fenz-red);
+        }
+
+        .fact-card h3 {
+            color: var(--fenz-yellow);
+            text-transform: uppercase;
+            margin-top: 0;
+        }
+
+        .fact-card p {
+            line-height: 1.6;
+            color: #cbd5e1;
         }
 
     </style>
@@ -176,18 +214,41 @@
             <div class="hero-text">
                 <p style="color: var(--fenz-yellow); font-weight: bold; text-transform: uppercase; margin-bottom: 10px;">Internal Portal</p>
                 <h1>LIVES<br>DEPEND<br>ON IT.</h1>
-                <a href="#safety" class="btn-safety">Duty Status</a>
+                <a href="#safety-facts" class="btn-safety">Smoke Alarms Save Lives</a>
             </div>
 
             <nav class="quick-links">
                 <div class="menu-title">Main Menu</div>
-                <a href="#">Leadership</a>
+                <a href="leadership.html">District Leadership</a>
                 <a href="#">Ranks</a>
                 <a href="roster.html">Station Roster</a>
                 <a href="#">My Profile</a>
                 <a href="#">Fleet status</a>
                 <a href="#">Contact Admin</a>
             </nav>
+        </div>
+    </section>
+
+    <section id="safety-facts" class="facts-section">
+        <div class="facts-container">
+            <h2 style="font-size: 2.5rem; text-transform: uppercase; border-left: 8px solid var(--fenz-red); padding-left: 20px;">Safety & District Facts</h2>
+            
+            <div class="facts-grid">
+                <div class="fact-card">
+                    <h3>Smoke Alarm Tip</h3>
+                    <p>You need a working smoke alarm in every bedroom, living area, and hallway. Check your batteries every month.</p>
+                </div>
+
+                <div class="fact-card">
+                    <h3>Response Readiness</h3>
+                    <p>Christchurch District maintains high operational readiness. Ensure your gear is checked and stowed correctly before every shift.</p>
+                </div>
+
+                <div class="fact-card">
+                    <h3>Escape Plans</h3>
+                    <p>In a fire, you have less than 3 minutes to get out. Always identify two ways out of every room in your station and home.</p>
+                </div>
+            </div>
         </div>
     </section>
 
