@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Commander Panel | Christchurch District</title>
+    <style>
+        body { background: #0b1120; color: white; font-family: sans-serif; padding: 40px; }
+        .panel-header { border-bottom: 2px solid #d42027; padding-bottom: 20px; margin-bottom: 30px; }
+        .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .tool-card { background: #162036; padding: 20px; border-radius: 4px; }
+        .status-btn { background: #22c55e; color: white; padding: 10px; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="panel-header">
+        <h1>Command Operations</h1>
+        <p>Logged in as: <strong>District Manager</strong></p>
+    </div>
+
+    <div class="tool-grid">
+        <div class="tool-card">
+            <h3>District Overview</h3>
+            <p>Active Stations: 1 (Auckland Central - N/A Callsign)</p>
+            <button class="status-btn">Manage Personnel</button>
+        </div>
+        <div class="tool-card">
+            <h3>Fleet Management</h3>
+            <p>Current Status: Operational</p>
+            <button class="status-btn" style="background: #d42027;">Set Emergency Alert</button>
+        </div>
+    </div>
+
+</body>
+</html>
