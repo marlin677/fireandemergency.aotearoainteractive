@@ -120,7 +120,6 @@
             cursor: pointer;
         }
 
-        /* DISCORD BUTTON STYLE */
         .btn-discord {
             display: inline-block;
             margin-top: 30px;
@@ -211,7 +210,6 @@
             line-height: 1.6;
             color: #cbd5e1;
         }
-
     </style>
 </head>
 <body>
@@ -230,12 +228,12 @@
     <section class="hero">
         <div class="hero-container">
             <div class="hero-text">
-                <p style="color: var(--fenz-yellow); font-weight: bold; text-transform: uppercase; margin-bottom: 10px;">Internal Portal</p>
-                <h1>LIVES<br>DEPEND<br>ON IT.</h1>
+                <p id="user-welcome-label" style="color: var(--fenz-yellow); font-weight: bold; text-transform: uppercase; margin-bottom: 10px;">Internal Portal</p>
+                <h1 id="main-headline">LIVES<br>DEPEND<br>ON IT.</h1>
                 
                 <a href="#safety-facts" class="btn-safety">Smoke Alarms Save Lives</a>
                 
-                <a href="YOUR_DISCORD_OAUTH_URL_HERE" class="btn-discord">
+                <a href="YOUR_DISCORD_OAUTH_URL_HERE" class="btn-discord" id="discord-auth-btn">
                     <img src="https://cdn.prod.website-files.com/6257adef93867e3d8405e367/6257adef93867e059105e612_9850_Discord_Logo_White.png" width="20" style="margin-right: 10px; vertical-align: middle;">
                     Login via Discord
                 </a>
@@ -293,11 +291,14 @@
                 .then(response => {
                     const { username } = response;
                     if(username) {
-                        document.querySelector('h1').innerHTML = `WELCOME,<br>${username.toUpperCase()}`;
-                        document.querySelector('.btn-discord').style.display = 'none';
+                        // Change Headline to Welcome User
+                        document.getElementById('main-headline').innerHTML = `WELCOME,<br>${username.toUpperCase()}`;
+                        document.getElementById('user-welcome-label').innerText = `AUTHENTICATED: ${username}`;
+                        // Hide login button
+                        document.getElementById('discord-auth-btn').style.display = 'none';
                     }
                 })
-                .catch(console.error);
+                .catch(err => console.error("Discord Auth Error:", err));
             }
         };
     </script>
