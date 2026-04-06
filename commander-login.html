@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commander Access | FENZ</title>
+    <style>
+        body {
+            background-color: #0b1120;
+            color: white;
+            font-family: 'Helvetica Neue', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-card {
+            background: #162036;
+            padding: 40px;
+            border-radius: 8px;
+            border-top: 5px solid #d42027; /* FENZ Red */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #1a253d;
+            border: 1px solid #2d3a54;
+            color: white;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #ffed00; /* FENZ Yellow */
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+        button:hover { background: white; }
+        .error { color: #d42027; font-size: 0.8rem; margin-top: 10px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <img src="https://raw.githubusercontent.com/marlin677/marlin77.github.io/main/FIRE%20AND%20EMERGENCY%20LOGO%201.png" width="150" alt="FENZ">
+    <h2 style="margin-top: 20px;">COMMANDER LOGIN</h2>
+    <p style="color: #94a3b8; font-size: 0.9rem;">Authorized Personnel Only</p>
+    
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Passcode">
+    <button onclick="checkLogin()">Authorize Access</button>
+    
+    <p id="error-msg" class="error">Invalid Credentials. Access Denied.</p>
+</div>
+
+<script>
+    function checkLogin() {
+        const user = document.getElementById('username').value;
+        const pass = document.getElementById('password').value;
+        const error = document.getElementById('error-msg');
+
+        // Set your Commander credentials here
+        if (user === "BenLewis" && pass === "Christchurch111") {
+            // Redirects to the secret commander page
+            window.location.href = "commander-panel.html"; 
+        } else {
+            error.style.display = "block";
+        }
+    }
+</script>
+
+</body>
+</html>
