@@ -10,7 +10,6 @@
             --fenz-yellow: #ffed00;
             --dark-bg: #1a1a1a;
             --slate-bg: #111a2e;
-            --discord-blurple: #5865F2;
         }
 
         * { box-sizing: border-box; }
@@ -120,22 +119,7 @@
             cursor: pointer;
         }
 
-        .btn-discord {
-            display: inline-block;
-            margin-top: 30px;
-            margin-left: 15px;
-            background-color: var(--discord-blurple);
-            color: white;
-            padding: 15px 25px;
-            font-weight: bold;
-            text-decoration: none;
-            text-transform: uppercase;
-            transition: 0.2s;
-            font-size: 1.1rem;
-            border-radius: 4px;
-        }
-
-        .btn-safety:hover, .btn-discord:hover {
+        .btn-safety:hover {
             background-color: white;
             color: black;
             transform: scale(1.05);
@@ -228,15 +212,10 @@
     <section class="hero">
         <div class="hero-container">
             <div class="hero-text">
-                <p id="user-welcome-label" style="color: var(--fenz-yellow); font-weight: bold; text-transform: uppercase; margin-bottom: 10px;">Internal Portal</p>
-                <h1 id="main-headline">LIVES<br>DEPEND<br>ON IT.</h1>
+                <p style="color: var(--fenz-yellow); font-weight: bold; text-transform: uppercase; margin-bottom: 10px;">Internal Portal</p>
+                <h1>LIVES<br>DEPEND<br>ON IT.</h1>
                 
                 <a href="#safety-facts" class="btn-safety">Smoke Alarms Save Lives</a>
-                
-                <a href="YOUR_DISCORD_OAUTH_URL_HERE" class="btn-discord" id="discord-auth-btn">
-                    <img src="https://cdn.prod.website-files.com/6257adef93867e3d8405e367/6257adef93867e059105e612_9850_Discord_Logo_White.png" width="20" style="margin-right: 10px; vertical-align: middle;">
-                    Login via Discord
-                </a>
             </div>
 
             <nav class="quick-links">
@@ -262,41 +241,16 @@
 
                 <div class="fact-card">
                     <h3>Response Readiness</h3>
-                    <p>Christchurch District maintains high operational readiness. Ensure your gear is checked and stowed correctly before every shift.</p>
+                    <p>A house fire can become deadly in under 3 minutes Get out, stay out, call 111.</p>
                 </div>
 
                 <div class="fact-card">
                     <h3>Escape Plans</h3>
-                    <p>In a fire, you have less than 3 minutes to get out. Always identify two ways out of every room in your station and home.</p>
+                    <p>In a fire, you have less than 3 minutes to get out. Always identify two ways out of every room in your and home.</p>
                 </div>
             </div>
         </div>
     </section>
-
-    <script>
-        window.onload = () => {
-            const fragment = new URLSearchParams(window.location.hash.slice(1));
-            const accessToken = fragment.get('access_token');
-
-            if (accessToken) {
-                fetch('https://discord.com/api/users/@me', {
-                    headers: {
-                        authorization: `Bearer ${accessToken}`,
-                    },
-                })
-                .then(result => result.json())
-                .then(response => {
-                    const { username } = response;
-                    if(username) {
-                        document.getElementById('main-headline').innerHTML = `WELCOME,<br>${username.toUpperCase()}`;
-                        document.getElementById('user-welcome-label').innerText = `AUTHENTICATED: ${username}`;
-                        document.getElementById('discord-auth-btn').style.display = 'none';
-                    }
-                })
-                .catch(err => console.error("Discord Auth Error:", err));
-            }
-        };
-    </script>
 
 </body>
 </html>
