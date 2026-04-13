@@ -1,1 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department Policies | FENZ Style</title>
+    <style>
+        :root {
+            --fenz-red: #d42027;
+            --fenz-yellow: #ffed00;
+            --dark-bg: #1a1a1a;
+            --slate-bg: #111a2e;
+        }
 
+        * { box-sizing: border-box; }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark-bg);
+            color: white;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .header-mini {
+            background-color: var(--slate-bg);
+            padding: 20px 4%;
+            border-bottom: 4px solid var(--fenz-red);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-small img { height: 50px; }
+
+        .back-link {
+            color: var(--fenz-yellow);
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 0 4%;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            border-left: 10px solid var(--fenz-red);
+            padding-left: 20px;
+        }
+
+        .policy-group { margin-bottom: 50px; }
+
+        .policy-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid var(--fenz-yellow);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 0 4px 4px 0;
+            transition: transform 0.2s;
+        }
+
+        .policy-card:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .policy-id {
+            color: var(--fenz-yellow);
+            font-weight: 900;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .policy-title {
+            font-weight: bold;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .highlight { color: var(--fenz-yellow); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <header class="header-mini">
+        <div class="logo-small">
+            <img src="https://raw.githubusercontent.com/marlin677/marlin77.github.io/main/FIRE%20AND%20EMERGENCY%20LOGO%201.png" alt="FENZ">
+        </div>
+        <a href="index.html" class="back-link">← Return to Portal</a>
+    </header>
+
+    <div class="container">
+        <h1>Operational Manual & Policies</h1>
+
+        <div class="policy-group">
+            
+            <div class="policy-card">
+                <span class="policy-id">1.00</span>
+                <span class="policy-title">Introduction</span>
+                <p>All personnel are expected to uphold the values of Fire and Emergency NZ, prioritizing life safety, incident stabilization, and property conservation in all actions.</p>
+            </div>
+
+            <div class="policy-card">
+                <span class="policy-id">1.01</span>
+                <span class="policy-title">Staff Conduct and Operational Interaction</span>
+                <p>Members must maintain professional conduct when interacting with other agencies. Chain of command must be respected at all times during active incidents.</p>
+            </div>
+
+            <div class="policy-card">
+                <span class="policy-id">1.02</span>
+                <span class="policy-title">Radio Guidelines</span>
+                <p>Practice <span class="highlight">Radio Silence</span> during critical incident phases. Use "Clear Speech" instead of complex codes to ensure all responding units understand instructions.</p>
+            </div>
+
+            <div class="policy-card">
+                <span class="policy-id">1.03</span>
+                <span class="policy-title">Callsign Guideline</span>
+                <p>Callsigns are assigned based on the appliance and district. Personnel must use their vehicle callsign (e.g., CHRI217) rather than personal names on all frequencies.</p>
+            </div>
+
+            <div class="policy-card">
+                <span class="policy-id">1.04</span>
+                <span class="policy-title">Radio Codes</span>
+                <p>Standardized status codes (K1, K2, K3, K4) must be used to update Dispatch on arrival, readiness, and scene status without clogging airtime.</p>
+            </div>
+
+            <div class="policy-card">
+                <span class="policy-id">1.05</span>
+                <span class="policy-title">Radio Events</span>
+                <p>In the event of a <span class="highlight">"Priority 1"</span> or "Emergency Traffic" call, all other units must cease transmission immediately until the emergency is cleared.</p>
+            </div>
+
+            <div class="policy-card">
+                <span class="policy-id">1.06</span>
+                <span class="policy-title">Equipment Basics/Usages</span>
+                <p>Specialized equipment such as the Jaws of Life, thermal cameras, and gas detectors may only be operated by personnel who have completed the relevant training modules.</p>
+            </div>
+
+            <div class="policy-card">
+                <span class="policy-id">1.07</span>
+                <span class="policy-title">Uniform Guidelines</span>
+                <p>High-visibility vests are mandatory for all roadway incidents. Full structural PPE including flash hoods is required for any interior fire operations.</p>
+            </div>
+
+            <div class="policy-card">
+                <span class="policy-id">1.08</span>
+                <span class="policy-title">Vehicle Guidelines</span>
+                <p><span class="highlight">CHRI217</span> must be fully crewed with 4 personnel before secondary trucks are utilized. Drivers must perform a 360-degree walk-around before moving any appliance.</p>
+            </div>
+
+            <div class="policy-card">
+                <span class="policy-id">1.09</span>
+                <span class="policy-title">Airdesk Guidelines</span>
+                <p>Coordination with aerial assets requires a designated ground spotter. Units must maintain a 50m exclusion zone from landing sites for helicopter operations.</p>
+            </div>
+
+            <div class="policy-card">
+                <span class="policy-id">1.10</span>
+                <span class="policy-title">Operational Support Unit (OSU) Deployment</span>
+                <p>OSU units provide lighting, hydration, and rehab. They should be staged at a "Cold Zone" location and marked clearly for all personnel to access.</p>
+            </div>
+
+            <div class="policy-card">
+                <span class="policy-id">1.11</span>
+                <span class="policy-title">MEDFR Deployment</span>
+                <p>Medical First Response units are dispatched for high-acuity medical calls. Personnel must provide a handover to Ambulance staff upon their arrival.</p>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
