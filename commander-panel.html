@@ -2,60 +2,208 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Commander Panel | Christchurch District</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FENZ | Personnel Management</title>
+    
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    
+    <link href="https://db.onlinewebfonts.com/c/30c7488235dccc1b4f5dd8ad33a47ddb?family=Industry-BoldItalic" rel="stylesheet">
 
     <style>
-        body { background: #0b1120; color: white; font-family: sans-serif; padding: 40px; }
-        .panel-header { border-bottom: 2px solid #d42027; padding-bottom: 20px; margin-bottom: 30px; }
-        .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .tool-card { background: #162036; padding: 20px; border-radius: 4px; }
-        .status-btn { background: #22c55e; color: white; padding: 10px; border: none; cursor: pointer; border-radius: 4px; margin-top: 10px; }
-        
-        /* Roster Management Styles */
-        .management-area { margin-top: 30px; background: #1e293b; padding: 20px; border-radius: 8px; border: 1px solid #334155; }
-        input { padding: 10px; margin: 5px 0; width: 100%; max-width: 300px; background: #0b1120; border: 1px solid #475569; color: white; border-radius: 4px; display: block; }
-        .member-item { display: flex; justify-content: space-between; background: #0f172a; padding: 10px; margin: 5px 0; border-radius: 4px; align-items: center; }
-        .remove-btn { background: #ef4444; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; }
+        :root {
+            --fenz-red: #d42027;
+            --fenz-yellow: #ffed00;
+            --dark-blue: #0b1120;
+            --table-header: #111a2e;
+            --row-bg: #162036;
+            --border-color: #2d3a54;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px;
+            background-color: var(--dark-blue);
+            color: #e2e8f0;
+            font-family: 'Industry-BoldItalic', sans-serif;
+            text-transform: uppercase;
+        }
+
+        /* --- EMERGENCY TOP BAR --- */
+        .emergency-banner {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://raw.githubusercontent.com/marlin677/marlin77.github.io/main/image_62ff55.png');
+            background-size: cover;
+            background-position: center;
+            padding: 15px;
+            text-align: right;
+            border-bottom: 3px solid var(--fenz-yellow);
+            margin: -40px -40px 30px -40px;
+        }
+
+        .emergency-text {
+            color: white;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .emergency-number {
+            color: var(--fenz-yellow);
+            font-size: 1.8rem;
+            display: block;
+            margin-top: -5px;
+        }
+
+        /* --- NAVIGATION --- */
+        .roster-nav {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #94a3b8;
+            background: var(--table-header);
+            padding: 12px 24px;
+            border-radius: 4px;
+            transition: 0.3s;
+            border: 1px solid var(--border-color);
+        }
+
+        .nav-item:hover {
+            background: var(--fenz-red);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 32, 39, 0.4);
+        }
+
+        /* --- MANAGEMENT FORM --- */
+        .admin-card {
+            background: var(--table-header);
+            padding: 30px;
+            border-radius: 6px;
+            border-top: 4px solid var(--fenz-red);
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        input, select {
+            background: #1a253d;
+            border: 1px solid var(--border-color);
+            padding: 14px;
+            color: white;
+            font-family: 'Industry-BoldItalic';
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .btn-update {
+            background: var(--fenz-yellow);
+            color: black;
+            border: none;
+            padding: 14px;
+            cursor: pointer;
+            font-weight: 900;
+            font-family: 'Industry-BoldItalic';
+            transition: 0.3s;
+            border-radius: 4px;
+        }
+
+        .btn-update:hover {
+            background: white;
+            transform: scale(1.02);
+        }
+
+        /* --- MASTER TABLE --- */
+        .master-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--row-bg);
+        }
+
+        th { background: var(--table-header); color: #94a3b8; padding: 15px; text-align: left; border-bottom: 2px solid var(--border-color); }
+        td { padding: 15px; border-bottom: 1px solid var(--border-color); transition: 0.2s; }
+        tr:hover td { background: rgba(255, 237, 0, 0.1); color: var(--fenz-yellow); }
+
+        .btn-delete {
+            background: transparent;
+            color: var(--fenz-red);
+            border: 1px solid var(--fenz-red);
+            padding: 5px 10px;
+            cursor: pointer;
+            font-family: 'Industry-BoldItalic';
+        }
     </style>
 </head>
 <body>
 
-    <div class="panel-header">
-        <h1>Command Operations</h1>
-        <p>Logged in as: <strong id="admin-name">Commander</strong></p>
+    <div class="emergency-banner">
+        <p class="emergency-text">IN EMERGENCIES</p>
+        <span class="emergency-number">Call 111</span>
     </div>
 
-    <div class="tool-grid">
-        <div class="tool-card">
-            <h3>District Overview</h3>
-            <p> District Members  - N/A Callsign)</p>
-            <button class="status-btn" onclick="toggleManagement()">Manage Personnel</button>
-        </div>
-        <div class="tool-card">
-            <h3>Fleet Management</h3>
-            <p>Current Status: Operational</p>
-            <button class="status-btn" style="background: #d42027;">Set Emergency Alert</button>
+    <nav class="roster-nav">
+        <a href="roster.html" class="nav-item">Fire Roster</a>
+        <a href="ntc.html" class="nav-item">NTC Roster</a>
+        <a href="comms.html" class="nav-item">Comms Roster</a>
+    </nav>
+
+    <div class="admin-card">
+        <div class="form-grid">
+            <input type="text" id="pName" placeholder="PERSONNEL NAME">
+            
+            <select id="pRank">
+                <option value="" disabled selected>SELECT RANK</option>
+                <optgroup label="COMCEN (Communication Centre)">
+                    <option value="COMCEN | Operations Manager">Operations Manager</option>
+                    <option value="COMCEN | Shift Manager">Shift Manager</option>
+                    <option value="COMCEN | Senior Dispatcher">Senior Dispatcher</option>
+                    <option value="COMCEN | Dispatcher">Dispatcher</option>
+                    <option value="COMCEN | Trainee Dispatcher">Trainee Dispatcher</option>
+                </optgroup>
+                <optgroup label="NTC (Training Centre)">
+                    <option value="Head Of National Training Centre">Head Of National Training Centre</option>
+                    <option value="Head Of Region 4 Training Centre">Head Of Region 4 Training Centre</option>
+                    <option value="National Trainer">National Trainer</option>
+                    <option value="Region 4 Trainer">Region 4 Trainer</option>
+                </optgroup>
+                <optgroup label="Fire Ranks">
+                    <option value="Senior Station Officer">Senior Station Officer</option>
+                    <option value="Station Officer">Station Officer</option>
+                    <option value="Firefighter">Firefighter</option>
+                    <option value="Volunteer Firefighter">Volunteer Firefighter</option>
+                </optgroup>
+            </select>
+
+            <select id="pType">
+                <option value="roster">FIRE DIVISION</option>
+                <option value="ntc">NTC DIVISION</option>
+                <option value="comms">COMMS DIVISION</option>
+            </select>
+
+            <button class="btn-update" onclick="submitToFirebase()">UPDATE DATABASE</button>
         </div>
     </div>
 
-    <div id="roster-management" class="management-area" style="display: none;">
-        <h2>Personnel Management</h2>
-        <div style="margin-bottom: 20px;">
-            <input type="text" id="m-name" placeholder="Full Name">
-            <input type="text" id="m-rank" placeholder="Rank">
-            <input type="text" id="m-id" placeholder="Discord ID / Badge Number">
-            <button class="status-btn" onclick="saveToRoster()">Add / Update Member</button>
-        </div>
-        
-        <hr style="border-color: #334155;">
-        <h3>Current Active Roster</h3>
-        <div id="roster-list-admin"></div>
-    </div>
+    <table class="master-table">
+        <thead>
+            <tr>
+                <th>NAME</th>
+                <th>RANK</th>
+                <th>DIVISION</th>
+                <th>ACTION</th>
+            </tr>
+        </thead>
+        <tbody id="master-display"></tbody>
+    </table>
 
     <script>
-        // Updated with your specific project credentials
         const firebaseConfig = {
             apiKey: "AIzaSyDQaJgS2_Dv86YMRS_T_VNtaptfHyPAhQk",
             authDomain: "rosterproject-dedcb.firebaseapp.com",
@@ -63,69 +211,52 @@
             projectId: "rosterproject-dedcb",
             storageBucket: "rosterproject-dedcb.firebasestorage.app",
             messagingSenderId: "360647207231",
-            appId: "1:360647207231:web:e315ade217c113ae664b8a",
-            measurementId: "G-QB1HDF4WM7"
+            appId: "1:360647207231:web:e315ade217c113ae664b8a"
         };
 
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        function toggleManagement() {
-            const area = document.getElementById('roster-management');
-            area.style.display = area.style.display === 'none' ? 'block' : 'none';
+        function submitToFirebase() {
+            const name = document.getElementById('pName').value;
+            const rank = document.getElementById('pRank').value;
+            const target = document.getElementById('pType').value;
+
+            if (name && rank) {
+                db.ref(target + '/').push({ name: name, rank: rank });
+                alert("Personnel Added.");
+                document.getElementById('pName').value = "";
+            }
         }
 
-        // Add or Edit Member
-        function saveToRoster() {
-            const name = document.getElementById('m-name').value;
-            const rank = document.getElementById('m-rank').value;
-            const id = document.getElementById('m-id').value;
-
-            if(name && rank && id) {
-                db.ref('roster/' + id).set({
-                    name: name,
-                    rank: rank
-                }).then(() => {
-                    alert("Personnel File Updated");
-                    document.getElementById('m-name').value = '';
-                    document.getElementById('m-rank').value = '';
-                    document.getElementById('m-id').value = '';
-                }).catch((error) => {
-                    alert("Error: Check your Firebase Rules!");
-                    console.error(error);
+        const paths = ['roster', 'ntc', 'comms'];
+        function loadList() {
+            const display = document.getElementById('master-display');
+            display.innerHTML = "";
+            paths.forEach(path => {
+                db.ref(path + '/').on('value', (snapshot) => {
+                    const data = snapshot.val();
+                    for (let id in data) {
+                        display.innerHTML += `
+                            <tr>
+                                <td style="color:white; font-weight:bold;">${data[id].name}</td>
+                                <td>${data[id].rank}</td>
+                                <td>${path.toUpperCase()}</td>
+                                <td><button class="btn-delete" onclick="removeEntry('${path}', '${id}')">REMOVE</button></td>
+                            </tr>`;
+                    }
                 });
-            } else {
-                alert("Please fill in all fields.");
+            });
+        }
+
+        function removeEntry(path, id) {
+            if (confirm("Remove entry?")) {
+                db.ref(path + '/' + id).remove();
+                location.reload();
             }
         }
 
-        // Load Roster to Admin View
-        db.ref('roster/').on('value', (snapshot) => {
-            const data = snapshot.val();
-            const container = document.getElementById('roster-list-admin');
-            container.innerHTML = "";
-            
-            if (data) {
-                for (let id in data) {
-                    container.innerHTML += `
-                        <div class="member-item">
-                            <span><strong>${data[id].name}</strong> - ${data[id].rank}</span>
-                            <button class="remove-btn" onclick="removeMember('${id}')">Remove</button>
-                        </div>
-                    `;
-                }
-            } else {
-                container.innerHTML = "<p>No personnel found.</p>";
-            }
-        });
-
-        // Remove Member
-        function removeMember(userId) {
-            if(confirm("Are you sure you want to remove this member?")) {
-                db.ref('roster/' + userId).remove();
-            }
-        }
+        loadList();
     </script>
 </body>
 </html>
