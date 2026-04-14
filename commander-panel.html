@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FENZ | Operational Management</title>
+    <title>FENZ | Command Management</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
@@ -18,7 +18,6 @@
             --table-header: #111a2e;
             --row-bg: #162036;
             --border-color: #2d3a54;
-            --btn-bg: #1a253d;
         }
 
         body {
@@ -30,64 +29,70 @@
             text-transform: uppercase;
         }
 
-        /* --- NAVIGATION TABS --- */
-        .roster-nav {
+        /* --- CONTROL BUTTONS --- */
+        .admin-controls {
             display: flex;
-            gap: 12px;
-            margin-bottom: 30px;
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
-        .nav-item {
-            text-decoration: none;
+        .toggle-btn {
+            background: #1a253d;
             color: white;
-            background: var(--btn-bg);
-            padding: 15px 30px;
-            border-radius: 4px;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
             border: 1px solid var(--border-color);
-            cursor: pointer;
-        }
-
-        .nav-item:hover, .nav-item.active {
-            border-color: #3b82f6;
-            background: rgba(59, 130, 246, 0.1);
-        }
-
-        /* --- MODIFIER DROPDOWN BUTTON --- */
-        .modify-toggle {
-            background: var(--fenz-red);
-            color: white;
-            border: none;
             padding: 15px 30px;
             border-radius: 4px;
             font-family: 'Industry-BoldItalic';
-            font-size: 0.95rem;
+            font-size: 1rem;
             cursor: pointer;
             transition: 0.3s;
-            margin-bottom: 10px;
+            flex: 1;
         }
 
-        .modify-toggle:hover {
-            background: #b91c1c;
-            box-shadow: 0 0 15px rgba(212, 32, 39, 0.4);
+        .toggle-btn:hover {
+            border-color: var(--fenz-yellow);
+            background: rgba(255, 237, 0, 0.05);
         }
 
-        /* --- HIDDEN DROPDOWN SECTION --- */
-        #modifier-section {
-            display: none; /* Hidden by default */
+        .toggle-btn.active {
+            background: var(--fenz-red);
+            border-color: var(--fenz-red);
+        }
+
+        /* --- DROPDOWN SECTIONS --- */
+        .dropdown-panel {
+            display: none;
             background: var(--table-header);
             padding: 25px;
             border-radius: 4px;
             border-top: 3px solid var(--fenz-red);
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
+        /* --- PROMOTIONS UI --- */
+        .promo-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        textarea {
+            background: #0f172a;
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            color: white;
+            font-family: 'Industry-BoldItalic';
+            font-size: 1rem;
+            min-height: 150px;
+            resize: vertical;
+            border-radius: 4px;
+        }
+
+        /* --- ROSTER MODIFIER UI --- */
         .form-grid {
             display: flex;
             gap: 10px;
-            align-items: center;
         }
 
         input, select {
@@ -96,11 +101,11 @@
             padding: 12px;
             color: white;
             font-family: 'Industry-BoldItalic';
+            border-radius: 4px;
             flex: 1;
-            border-radius: 2px;
         }
 
-        .btn-update {
+        .btn-action {
             background: var(--fenz-yellow);
             color: black;
             border: none;
@@ -108,95 +113,61 @@
             font-weight: 900;
             font-family: 'Industry-BoldItalic';
             cursor: pointer;
-            transition: 0.3s;
+            border-radius: 4px;
         }
 
-        .btn-update:hover {
-            filter: brightness(1.2);
-            transform: translateY(-1px);
-        }
-
-        /* --- TABLE --- */
+        /* --- MASTER TABLE --- */
         .master-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
         }
 
-        th {
-            text-align: left;
-            padding: 15px;
-            background: var(--table-header);
-            color: #94a3b8;
-            font-size: 0.8rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        td {
-            padding: 15px;
-            background: var(--row-bg);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        tr:hover td {
-            background: rgba(255, 237, 0, 0.05);
-        }
-
+        th { text-align: left; padding: 15px; background: var(--table-header); color: #94a3b8; font-size: 0.8rem; }
+        td { padding: 15px; background: var(--row-bg); border-bottom: 1px solid var(--border-color); }
+        
         .btn-remove {
             color: var(--fenz-red);
             background: transparent;
             border: 1px solid var(--fenz-red);
-            padding: 4px 10px;
+            padding: 5px 10px;
             cursor: pointer;
             font-family: 'Industry-BoldItalic';
-        }
-
-        .btn-remove:hover {
-            background: var(--fenz-red);
-            color: white;
         }
     </style>
 </head>
 <body>
 
-    <div class="roster-nav">
-        <a href="roster.html" class="nav-item">FIRE ROSTER</a>
-        <a href="ntc.html" class="nav-item">NTC ROSTER</a>
-        <a href="comms.html" class="nav-item">COMMS ROSTER</a>
-        <button class="modify-toggle" onclick="toggleModifier()">MODIFY ROSTER ▾</button>
+    <div class="admin-controls">
+        <button class="toggle-btn" id="btn-mod" onclick="toggleSection('modifier-section', 'btn-mod')">ROSTER MODIFIER ▾</button>
+        <button class="toggle-btn" id="btn-promo" onclick="toggleSection('promo-section', 'btn-promo')">PENDING PROMOTIONS ▾</button>
     </div>
 
-    <div id="modifier-section">
+    <div id="modifier-section" class="dropdown-panel">
         <div class="form-grid">
             <input type="text" id="pName" placeholder="PERSONNEL NAME">
-            
             <select id="pRank">
                 <option value="" disabled selected>SELECT RANK</option>
-                <optgroup label="Fire Division">
-                    <option value="Commander">Commander</option>
-                    <option value="Assistant National Commander">Assistant National Commander</option>
-                    <option value="Acting Station Officer">Acting Station Officer</option>
-                    <option value="Senior Firefighter">Senior Firefighter</option>
-                    <option value="Qualified Firefighter">Qualified Firefighter</option>
-                    <option value="Firefighter">Firefighter</option>
-                    <option value="Rural Crew Leader">Rural Crew Leader</option>
-                    <option value="Recruit Firefighter">Recruit Firefighter</option>
-                </optgroup>
-                <optgroup label="Comms/NTC Division">
-                    <option value="Senior Dispatcher">Senior Dispatcher</option>
-                    <option value="Dispatcher">Dispatcher</option>
-                    <option value="Trainee Dispatcher">Trainee Dispatcher</option>
-                    <option value="National Trainer">National Trainer</option>
-                </optgroup>
+                <option value="Commander">Commander</option>
+                <option value="Senior Station Officer">Senior Station Officer</option>
+                <option value="Station Officer">Station Officer</option>
+                <option value="Firefighter">Firefighter</option>
+                <option value="Recruit Firefighter">Recruit Firefighter</option>
+                <option value="Senior Dispatcher">Senior Dispatcher</option>
+                <option value="Dispatcher">Dispatcher</option>
             </select>
-
             <select id="pType">
-                <option value="roster">ROSTER DIVISION</option>
+                <option value="roster">FIRE DIVISION</option>
                 <option value="ntc">NTC DIVISION</option>
                 <option value="comms">COMMS DIVISION</option>
             </select>
+            <button class="btn-action" onclick="submitPersonnel()">UPDATE ROSTER</button>
+        </div>
+    </div>
 
-            <button class="btn-update" onclick="submitData()">UPDATE DATABASE</button>
+    <div id="promo-section" class="dropdown-panel">
+        <div class="promo-container">
+            <textarea id="promoText" placeholder="TYPE PENDING PROMOTIONS HERE..."></textarea>
+            <button class="btn-action" style="width: 200px;" onclick="savePromotions()">SAVE PROMOTIONS</button>
         </div>
     </div>
 
@@ -213,7 +184,6 @@
     </table>
 
     <script>
-        // CONFIG
         const firebaseConfig = {
             apiKey: "AIzaSyDQaJgS2_Dv86YMRS_T_VNtaptfHyPAhQk",
             authDomain: "rosterproject-dedcb.firebaseapp.com",
@@ -227,26 +197,45 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // TOGGLE LOGIC
-        function toggleModifier() {
-            const section = document.getElementById('modifier-section');
-            if (section.style.display === "block") {
-                section.style.display = "none";
-            } else {
+        // UI TOGGLE
+        function toggleSection(sectionId, btnId) {
+            const section = document.getElementById(sectionId);
+            const btn = document.getElementById(btnId);
+            const isVisible = section.style.display === "block";
+            
+            // Close others
+            document.querySelectorAll('.dropdown-panel').forEach(s => s.style.display = 'none');
+            document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+
+            if (!isVisible) {
                 section.style.display = "block";
+                btn.classList.add('active');
             }
         }
 
-        // DATABASE LOGIC
-        function submitData() {
+        // SAVE PROMOTIONS TO DATABASE
+        function savePromotions() {
+            const text = document.getElementById('promoText').value;
+            db.ref('management/promotions').set({
+                list: text,
+                lastUpdated: new Date().toLocaleString()
+            }).then(() => alert("Promotions Saved Successfully"));
+        }
+
+        // LOAD PROMOTIONS ON START
+        db.ref('management/promotions/list').on('value', (snap) => {
+            if(snap.val()) document.getElementById('promoText').value = snap.val();
+        });
+
+        // ROSTER LOGIC
+        function submitPersonnel() {
             const name = document.getElementById('pName').value;
             const rank = document.getElementById('pRank').value;
-            const target = document.getElementById('pType').value;
-
-            if (name && rank) {
-                db.ref(target + '/').push({ name: name, rank: rank });
-                alert("Database Updated");
+            const type = document.getElementById('pType').value;
+            if(name && rank) {
+                db.ref(type + '/').push({ name, rank });
                 document.getElementById('pName').value = "";
+                alert("Personnel Added");
             }
         }
 
@@ -261,7 +250,7 @@
                             <tr>
                                 <td style="color:white; font-weight:bold;">${data[id].name}</td>
                                 <td>${data[id].rank}</td>
-                                <td style="color: #94a3b8">${path.toUpperCase()}</td>
+                                <td style="color:#94a3b8">${path.toUpperCase()}</td>
                                 <td><button class="btn-remove" onclick="deleteItem('${path}', '${id}')">REMOVE</button></td>
                             </tr>`;
                     }
@@ -270,7 +259,7 @@
         }
 
         function deleteItem(path, id) {
-            if (confirm("Confirm removal?")) {
+            if(confirm("Remove?")) {
                 db.ref(path + '/' + id).remove();
                 location.reload();
             }
