@@ -24,7 +24,6 @@
             padding: 0;
             background-color: var(--dark-bg);
             color: white;
-            /* APPLYING THE NEW FONT GLOBALLY */
             font-family: 'Industry-BoldItalic', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             scroll-behavior: smooth;
             overflow-x: hidden;
@@ -72,22 +71,23 @@
 
         .emergency-contact {
             text-align: right;
-            line-height: 1.1;
+            line-height: 1.0; /* Tightened line height for larger text */
             padding-top: 10px;
         }
 
         .emergency-label {
-            font-size: 0.8rem;
+            font-size: 0.9rem; /* Slightly larger label */
             font-weight: bold;
             letter-spacing: 1px;
-            color: white;
+            color: white; /* Explicitly white */
             text-transform: uppercase;
         }
 
         .emergency-number {
-            font-size: 2.2rem;
-            color: var(--fenz-yellow);
+            font-size: 2.8rem; /* Increased size */
+            color: white; /* Changed from Yellow to White */
             font-weight: 900;
+            margin-top: 2px;
         }
 
         /* --- BANNER STYLING --- */
@@ -96,12 +96,12 @@
             display: flex;
             justify-content: center;
             position: absolute;
-            top: 140px; /* Positioned below the main logo/header */
+            top: 140px;
             z-index: 101;
         }
 
         .mid-banner img {
-            max-width: 80%; /* Adjusted so it doesn't crowd the screen */
+            max-width: 80%;
             height: auto;
             border-radius: 4px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.6);
@@ -127,7 +127,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 100px; /* Added more space for the banner */
+            margin-top: 100px;
         }
 
         .hero-text {
@@ -274,7 +274,7 @@
 
     <section id="safety-facts" class="facts-section">
         <div class="facts-container">
-            <h2 style="font-size: 2.5rem; text-transform: uppercase; border-left: 8px solid var(--fenz-red); padding-left: 20px;">Safety & District Facts</h2>
+            <h2 style="font-size: 2.5rem; text-transform: uppercase; border-left: 8px solid var(--fenz-red); padding-left: 20px;">Safety & Facts</h2>
             
             <div class="facts-grid">
                 <div class="fact-card">
