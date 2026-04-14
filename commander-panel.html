@@ -20,16 +20,20 @@
             --border-color: #2d3a54;
         }
 
+        /* Global Font Application */
+        * {
+            font-family: 'Industry-BoldItalic', sans-serif !important;
+            text-transform: uppercase;
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             padding: 40px;
             background-color: var(--dark-blue);
             color: #e2e8f0;
-            font-family: 'Industry-BoldItalic', sans-serif;
-            text-transform: uppercase;
         }
 
-        /* --- CONTROL BUTTONS --- */
         .admin-controls {
             display: flex;
             gap: 15px;
@@ -42,7 +46,6 @@
             border: 1px solid var(--border-color);
             padding: 15px 30px;
             border-radius: 4px;
-            font-family: 'Industry-BoldItalic';
             font-size: 1rem;
             cursor: pointer;
             transition: 0.3s;
@@ -59,7 +62,6 @@
             border-color: var(--fenz-red);
         }
 
-        /* --- DROPDOWN SECTIONS --- */
         .dropdown-panel {
             display: none;
             background: var(--table-header);
@@ -70,39 +72,25 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* --- PROMOTIONS UI --- */
-        .promo-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        textarea {
-            background: #0f172a;
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            color: white;
-            font-family: 'Industry-BoldItalic';
-            font-size: 1rem;
-            min-height: 150px;
-            resize: vertical;
-            border-radius: 4px;
-        }
-
-        /* --- ROSTER MODIFIER UI --- */
         .form-grid {
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
         }
 
-        input, select {
+        input, select, textarea {
             background: #0f172a;
             border: 1px solid var(--border-color);
             padding: 12px;
             color: white;
-            font-family: 'Industry-BoldItalic';
             border-radius: 4px;
             flex: 1;
+            min-width: 150px;
+            outline: none;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--fenz-yellow);
         }
 
         .btn-action {
@@ -111,27 +99,58 @@
             border: none;
             padding: 12px 25px;
             font-weight: 900;
-            font-family: 'Industry-BoldItalic';
             cursor: pointer;
             border-radius: 4px;
+            transition: 0.3s;
         }
 
-        /* --- MASTER TABLE --- */
+        .btn-action:hover {
+            filter: brightness(1.2);
+            transform: translateY(-2px);
+        }
+
         .master-table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        th { text-align: left; padding: 15px; background: var(--table-header); color: #94a3b8; font-size: 0.8rem; }
-        td { padding: 15px; background: var(--row-bg); border-bottom: 1px solid var(--border-color); }
+        th { 
+            text-align: left; 
+            padding: 15px; 
+            background: var(--table-header); 
+            color: #94a3b8; 
+            font-size: 0.8rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td { 
+            padding: 15px; 
+            background: var(--row-bg); 
+            border-bottom: 1px solid var(--border-color);
+            transition: 0.2s;
+        }
+
+        tr:hover td {
+            background: rgba(255, 237, 0, 0.05);
+        }
         
+        .callsign-tag { 
+            color: var(--fenz-yellow); 
+            font-weight: bold; 
+        }
+
         .btn-remove {
             color: var(--fenz-red);
             background: transparent;
             border: 1px solid var(--fenz-red);
             padding: 5px 10px;
             cursor: pointer;
-            font-family: 'Industry-BoldItalic';
+            border-radius: 3px;
+        }
+
+        .btn-remove:hover {
+            background: var(--fenz-red);
+            color: white;
         }
     </style>
 </head>
@@ -145,37 +164,28 @@
     <div id="modifier-section" class="dropdown-panel">
         <div class="form-grid">
             <input type="text" id="pName" placeholder="PERSONNEL NAME">
-            <select id="pRank">
-                <option value="" disabled selected>SELECT RANK</option>
-                <option value="Commander">Commander</option>
-                <option value="Senior Station Officer">Senior Station Officer</option>
-                <option value="Station Officer">Station Officer</option>
-                <option value="Firefighter">Firefighter</option>
-                <option value="Recruit Firefighter">Recruit Firefighter</option>
-                <option value="Senior Dispatcher">Senior Dispatcher</option>
-                <option value="Dispatcher">Dispatcher</option>
-            </select>
+            <input type="text" id="pCallsign" placeholder="CALLSIGN">
+            <input type="text" id="pRankText" placeholder="RANK / ROLE">
             <select id="pType">
                 <option value="roster">FIRE DIVISION</option>
                 <option value="ntc">NTC DIVISION</option>
                 <option value="comms">COMMS DIVISION</option>
             </select>
-            <button class="btn-action" onclick="submitPersonnel()">UPDATE ROSTER</button>
+            <button class="btn-action" onclick="submitPersonnel()">UPDATE DATABASE</button>
         </div>
     </div>
 
     <div id="promo-section" class="dropdown-panel">
-        <div class="promo-container">
-            <textarea id="promoText" placeholder="TYPE PENDING PROMOTIONS HERE..."></textarea>
-            <button class="btn-action" style="width: 200px;" onclick="savePromotions()">SAVE PROMOTIONS</button>
-        </div>
+        <textarea id="promoText" style="width:100%; min-height:120px;" placeholder="TYPE PENDING PROMOTIONS..."></textarea>
+        <button class="btn-action" style="margin-top:10px;" onclick="savePromotions()">SAVE PROMOTIONS</button>
     </div>
 
     <table class="master-table">
         <thead>
             <tr>
+                <th>CALLSIGN</th>
                 <th>NAME</th>
-                <th>RANK</th>
+                <th>RANK/ROLE</th>
                 <th>DIVISION</th>
                 <th>ACTION</th>
             </tr>
@@ -197,75 +207,45 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // UI TOGGLE
         function toggleSection(sectionId, btnId) {
             const section = document.getElementById(sectionId);
             const btn = document.getElementById(btnId);
             const isVisible = section.style.display === "block";
-            
-            // Close others
             document.querySelectorAll('.dropdown-panel').forEach(s => s.style.display = 'none');
             document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
-
-            if (!isVisible) {
-                section.style.display = "block";
-                btn.classList.add('active');
-            }
+            if (!isVisible) { section.style.display = "block"; btn.classList.add('active'); }
         }
 
-        // SAVE PROMOTIONS TO DATABASE
-        function savePromotions() {
-            const text = document.getElementById('promoText').value;
-            db.ref('management/promotions').set({
-                list: text,
-                lastUpdated: new Date().toLocaleString()
-            }).then(() => alert("Promotions Saved Successfully"));
-        }
-
-        // LOAD PROMOTIONS ON START
-        db.ref('management/promotions/list').on('value', (snap) => {
-            if(snap.val()) document.getElementById('promoText').value = snap.val();
-        });
-
-        // ROSTER LOGIC
         function submitPersonnel() {
             const name = document.getElementById('pName').value;
-            const rank = document.getElementById('pRank').value;
+            const callsign = document.getElementById('pCallsign').value;
+            const rank = document.getElementById('pRankText').value;
             const type = document.getElementById('pType').value;
+            
             if(name && rank) {
-                db.ref(type + '/').push({ name, rank });
+                db.ref(type + '/').push({ 
+                    name: name, 
+                    callsign: callsign || "N/A", 
+                    rank: rank 
+                });
                 document.getElementById('pName').value = "";
-                alert("Personnel Added");
+                document.getElementById('pCallsign').value = "";
+                document.getElementById('pRankText').value = "";
+                alert("Personnel Added.");
             }
         }
 
         function loadList() {
             const display = document.getElementById('master-display');
+            const paths = ['roster', 'ntc', 'comms'];
+            
+            // Clear display first
             display.innerHTML = "";
-            ['roster', 'ntc', 'comms'].forEach(path => {
+
+            paths.forEach(path => {
                 db.ref(path + '/').on('value', (snapshot) => {
                     const data = snapshot.val();
-                    for (let id in data) {
-                        display.innerHTML += `
-                            <tr>
-                                <td style="color:white; font-weight:bold;">${data[id].name}</td>
-                                <td>${data[id].rank}</td>
-                                <td style="color:#94a3b8">${path.toUpperCase()}</td>
-                                <td><button class="btn-remove" onclick="deleteItem('${path}', '${id}')">REMOVE</button></td>
-                            </tr>`;
-                    }
+                    // We rebuild the table to ensure data across different paths stays synced
+                    refreshTable();
                 });
             });
-        }
-
-        function deleteItem(path, id) {
-            if(confirm("Remove?")) {
-                db.ref(path + '/' + id).remove();
-                location.reload();
-            }
-        }
-
-        loadList();
-    </script>
-</body>
-</html>
