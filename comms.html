@@ -1,1 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FENZ | COMCEN Roster</title>
+    <link href="https://db.onlinewebfonts.com/c/30c7488235dccc1b4f5dd8ad33a47ddb?family=Industry-BoldItalic" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <style>
+        :root {
+            --fenz-red: #d42027;
+            --fenz-yellow: #ffed00;
+            --dark-blue: #0b1120;
+            --row-bg: #162036;
+        }
+        * { font-family: 'Industry-BoldItalic', sans-serif !important; text-transform: uppercase; box-sizing: border-box; }
+        body { background-color: var(--dark-blue); color: #e2e8f0; padding: 40px; margin: 0; }
+        h1 { border-left: 5px solid var(--fenz-yellow); padding-left: 15px; margin-bottom: 30px; letter-spacing: 1px; }
+        .roster-table { width: 100%; border-collapse: collapse; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        th { text-align: left; padding: 15px; background: #111a2e; color: #94a3b8; font-size: 0.8rem; border-bottom: 2px solid #2d3a54; }
+        td { padding: 15px; background: var(--row-bg); border-bottom: 1px solid #2d3a54; }
+        .callsign { color: var(--fenz-yellow); font-weight: bold; }
+        .name { color: white; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Communication Centre | Personnel</h1>
+    <table class="roster-table">
+        <thead>
+            <tr>
+                <th>CALLSIGN</th>
+                <th>NAME</th>
+                <th>RANK / ROLE</th>
+            </tr>
+        </thead>
+        <tbody id="comms-display"></tbody>
+    </table>
 
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDQaJgS2_Dv86YMRS_T_VNtaptfHyPAhQk",
+            authDomain: "rosterproject-dedcb.firebaseapp.com",
+            databaseURL: "https://rosterproject-dedcb-default-rtdb.firebaseio.com",
+            projectId: "rosterproject-dedcb",
+            storageBucket: "rosterproject-dedcb.firebasestorage.app",
+            messagingSenderId: "360647207231",
+            appId: "1:360647207231:web:e315ade217c113ae664b8a"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        db.ref('comms/').on('value', (snapshot) => {
+            const display = document.getElementById('comms-display');
+            display.innerHTML = "";
+            const data = snapshot.val();
+            for (let id in data) {
+                display.innerHTML += `
+                    <tr>
+                        <td class="callsign">${data[id].callsign}</td>
+                        <td class="name">${data[id].name}</td>
+                        <td>${data[id].rank}</td>
+                    </tr>`;
+            }
+        });
+    </script>
+</body>
+</html>
