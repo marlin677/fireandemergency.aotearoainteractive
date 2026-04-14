@@ -33,6 +33,7 @@
             border: 1px solid #2d3a54;
             color: white;
             border-radius: 4px;
+            box-sizing: border-box; /* Ensures padding doesn't break width */
         }
         button {
             width: 100%;
@@ -55,7 +56,7 @@
     <h2 style="margin-top: 20px;">COMMANDER LOGIN</h2>
     <p style="color: #94a3b8; font-size: 0.9rem;">Authorized Personnel Only</p>
     
-    <input type="text" id="username" placeholder="Username">
+    <input type="email" id="username" placeholder="Email Address">
     <input type="password" id="password" placeholder="Passcode">
     <button onclick="checkLogin()">Authorize Access</button>
     
@@ -68,12 +69,18 @@
         const pass = document.getElementById('password').value;
         const error = document.getElementById('error-msg');
 
-        // Set your Commander credentials here
-        if (user === "BenLewis" && pass === "Christchurch111") {
-        (user === "EthanBrown" && pass === "Snicker") 
+        // Authentication Logic
+        if (
+            (user === "ben.lewis@fireandemergencyaotearoa.co.nz" && pass === "Rydog1") ||
+            (user === "ethan.brown@fireandemergencyaotearoa.co.nz" && pass === "Sticker") ||
+            (user === "kieran.striker@fireandemergencyaotearoa.co.nz" && pass === "Bog1220") ||
+            (user === "craig.blippy@fireandemergencyaotearoa.co.nz" && pass === "Macpac2") ||
+            (user === "cam.revely@fireandemergencyaotearoa.co.nz" && pass === "ihatwnu1247")
+        ) {
             // Redirects to the secret commander page
             window.location.href = "commander-panel.html"; 
         } else {
+            // Show error message if login fails
             error.style.display = "block";
         }
     }
