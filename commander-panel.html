@@ -249,3 +249,46 @@
                     refreshTable();
                 });
             });
+        }
+
+        function refreshTable() {
+            const display = document.getElementById('master-display');
+            display.innerHTML = "";
+            ['roster', 'ntc', 'comms'].forEach(path => {
+                db.ref(path + '/').once('value', (snapshot) => {
+                    const data = snapshot.val();
+                    for (let id in data) {
+                        display.innerHTML += `
+                            <tr>
+                                <td class="callsign-tag">${data[id].callsign}</td>
+                                <td style="color:white; font-weight:bold;">${data[id].name}</td>
+                                <td>${data[id].rank}</td>
+                                <td style="color:#94a3b8">${path.toUpperCase()}</td>
+                                <td><button class="btn-remove" onclick="deleteItem('${path}', '${id}')">REMOVE</button></td>
+                            </tr>`;
+                    }
+                });
+            });
+        }
+
+        function savePromotions() {
+            const text = document.getElementById('promoText').value;
+            db.ref('management/promotions').set({ list: text });
+            alert("Promotions Saved.");
+        }
+
+        db.ref('management/promotions/list').on('value', (snap) => {
+            if(snap.val()) document.getElementById('promoText').value = snap.val();
+        });
+
+        function deleteItem(path, id) {
+            if(confirm("Remove?")) { 
+                db.ref(path + '/' + id).remove(); 
+                location.reload(); 
+            }
+        }
+
+        loadList();
+    </script>
+</body>
+</html>
