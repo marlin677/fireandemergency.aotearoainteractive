@@ -3,26 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Commander Panel | Christchurch District</title>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+
     <style>
         body { background: #0b1120; color: white; font-family: sans-serif; padding: 40px; }
         .panel-header { border-bottom: 2px solid #d42027; padding-bottom: 20px; margin-bottom: 30px; }
         .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .tool-card { background: #162036; padding: 20px; border-radius: 4px; }
-        .status-btn { background: #22c55e; color: white; padding: 10px; border: none; cursor: pointer; }
+        .status-btn { background: #22c55e; color: white; padding: 10px; border: none; cursor: pointer; border-radius: 4px; margin-top: 10px; }
+        
+        /* Roster Management Styles */
+        .management-area { margin-top: 30px; background: #1e293b; padding: 20px; border-radius: 8px; border: 1px solid #334155; }
+        input { padding: 10px; margin: 5px 0; width: 100%; max-width: 300px; background: #0b1120; border: 1px solid #475569; color: white; border-radius: 4px; display: block; }
+        .member-item { display: flex; justify-content: space-between; background: #0f172a; padding: 10px; margin: 5px 0; border-radius: 4px; align-items: center; }
+        .remove-btn { background: #ef4444; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; }
     </style>
 </head>
 <body>
 
     <div class="panel-header">
         <h1>Command Operations</h1>
-        <p>Logged in as: <strong>District Manager</strong></p>
+        <p>Logged in as: <strong id="admin-name">Commander</strong></p>
     </div>
 
     <div class="tool-grid">
         <div class="tool-card">
             <h3>District Overview</h3>
             <p>Active Stations: 1 (Auckland Central - N/A Callsign)</p>
-            <button class="status-btn">Manage Personnel</button>
+            <button class="status-btn" onclick="toggleManagement()">Manage Personnel</button>
         </div>
         <div class="tool-card">
             <h3>Fleet Management</h3>
@@ -31,5 +40,92 @@
         </div>
     </div>
 
+    <div id="roster-management" class="management-area" style="display: none;">
+        <h2>Personnel Management</h2>
+        <div style="margin-bottom: 20px;">
+            <input type="text" id="m-name" placeholder="Full Name">
+            <input type="text" id="m-rank" placeholder="Rank">
+            <input type="text" id="m-id" placeholder="Discord ID / Badge Number">
+            <button class="status-btn" onclick="saveToRoster()">Add / Update Member</button>
+        </div>
+        
+        <hr style="border-color: #334155;">
+        <h3>Current Active Roster</h3>
+        <div id="roster-list-admin"></div>
+    </div>
+
+    <script>
+        // Updated with your specific project credentials
+        const firebaseConfig = {
+            apiKey: "AIzaSyDQaJgS2_Dv86YMRS_T_VNtaptfHyPAhQk",
+            authDomain: "rosterproject-dedcb.firebaseapp.com",
+            databaseURL: "https://rosterproject-dedcb-default-rtdb.firebaseio.com",
+            projectId: "rosterproject-dedcb",
+            storageBucket: "rosterproject-dedcb.firebasestorage.app",
+            messagingSenderId: "360647207231",
+            appId: "1:360647207231:web:e315ade217c113ae664b8a",
+            measurementId: "G-QB1HDF4WM7"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        function toggleManagement() {
+            const area = document.getElementById('roster-management');
+            area.style.display = area.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Add or Edit Member
+        function saveToRoster() {
+            const name = document.getElementById('m-name').value;
+            const rank = document.getElementById('m-rank').value;
+            const id = document.getElementById('m-id').value;
+
+            if(name && rank && id) {
+                db.ref('roster/' + id).set({
+                    name: name,
+                    rank: rank
+                }).then(() => {
+                    alert("Personnel File Updated");
+                    document.getElementById('m-name').value = '';
+                    document.getElementById('m-rank').value = '';
+                    document.getElementById('m-id').value = '';
+                }).catch((error) => {
+                    alert("Error: Check your Firebase Rules!");
+                    console.error(error);
+                });
+            } else {
+                alert("Please fill in all fields.");
+            }
+        }
+
+        // Load Roster to Admin View
+        db.ref('roster/').on('value', (snapshot) => {
+            const data = snapshot.val();
+            const container = document.getElementById('roster-list-admin');
+            container.innerHTML = "";
+            
+            if (data) {
+                for (let id in data) {
+                    container.innerHTML += `
+                        <div class="member-item">
+                            <span><strong>${data[id].name}</strong> - ${data[id].rank}</span>
+                            <button class="remove-btn" onclick="removeMember('${id}')">Remove</button>
+                        </div>
+                    `;
+                }
+            } else {
+                container.innerHTML = "<p>No personnel found.</p>";
+            }
+        });
+
+        // Remove Member
+        function removeMember(userId) {
+            if(confirm("Are you sure you want to remove this member?")) {
+                db.ref('roster/' + userId).remove();
+            }
+        }
+    </script>
 </body>
 </html>
