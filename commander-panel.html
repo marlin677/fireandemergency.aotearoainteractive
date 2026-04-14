@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FENZ | Personnel Management</title>
+    <title>FENZ | Operational Management</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
@@ -18,6 +18,7 @@
             --table-header: #111a2e;
             --row-bg: #162036;
             --border-color: #2d3a54;
+            --btn-bg: #1a253d;
         }
 
         body {
@@ -29,31 +30,7 @@
             text-transform: uppercase;
         }
 
-        /* --- EMERGENCY TOP BAR --- */
-        .emergency-banner {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://raw.githubusercontent.com/marlin677/marlin77.github.io/main/image_62ff55.png');
-            background-size: cover;
-            background-position: center;
-            padding: 15px;
-            text-align: right;
-            border-bottom: 3px solid var(--fenz-yellow);
-            margin: -40px -40px 30px -40px;
-        }
-
-        .emergency-text {
-            color: white;
-            font-size: 0.9rem;
-            margin: 0;
-        }
-
-        .emergency-number {
-            color: var(--fenz-yellow);
-            font-size: 1.8rem;
-            display: block;
-            margin-top: -5px;
-        }
-
-        /* --- NAVIGATION --- */
+        /* --- NAVIGATION TABS --- */
         .roster-nav {
             display: flex;
             gap: 12px;
@@ -62,132 +39,164 @@
 
         .nav-item {
             text-decoration: none;
-            color: #94a3b8;
-            background: var(--table-header);
-            padding: 12px 24px;
+            color: white;
+            background: var(--btn-bg);
+            padding: 15px 30px;
             border-radius: 4px;
-            transition: 0.3s;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
             border: 1px solid var(--border-color);
+            cursor: pointer;
         }
 
-        .nav-item:hover {
+        .nav-item:hover, .nav-item.active {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        /* --- MODIFIER DROPDOWN BUTTON --- */
+        .modify-toggle {
             background: var(--fenz-red);
             color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(212, 32, 39, 0.4);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 4px;
+            font-family: 'Industry-BoldItalic';
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 10px;
         }
 
-        /* --- MANAGEMENT FORM --- */
-        .admin-card {
+        .modify-toggle:hover {
+            background: #b91c1c;
+            box-shadow: 0 0 15px rgba(212, 32, 39, 0.4);
+        }
+
+        /* --- HIDDEN DROPDOWN SECTION --- */
+        #modifier-section {
+            display: none; /* Hidden by default */
             background: var(--table-header);
-            padding: 30px;
-            border-radius: 6px;
-            border-top: 4px solid var(--fenz-red);
+            padding: 25px;
+            border-radius: 4px;
+            border-top: 3px solid var(--fenz-red);
             margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
         }
 
         input, select {
-            background: #1a253d;
+            background: #0f172a;
             border: 1px solid var(--border-color);
-            padding: 14px;
+            padding: 12px;
             color: white;
             font-family: 'Industry-BoldItalic';
-            border-radius: 4px;
-            outline: none;
+            flex: 1;
+            border-radius: 2px;
         }
 
         .btn-update {
             background: var(--fenz-yellow);
             color: black;
             border: none;
-            padding: 14px;
-            cursor: pointer;
+            padding: 12px 25px;
             font-weight: 900;
             font-family: 'Industry-BoldItalic';
+            cursor: pointer;
             transition: 0.3s;
-            border-radius: 4px;
         }
 
         .btn-update:hover {
-            background: white;
-            transform: scale(1.02);
+            filter: brightness(1.2);
+            transform: translateY(-1px);
         }
 
-        /* --- MASTER TABLE --- */
+        /* --- TABLE --- */
         .master-table {
             width: 100%;
             border-collapse: collapse;
-            background: var(--row-bg);
+            margin-top: 20px;
         }
 
-        th { background: var(--table-header); color: #94a3b8; padding: 15px; text-align: left; border-bottom: 2px solid var(--border-color); }
-        td { padding: 15px; border-bottom: 1px solid var(--border-color); transition: 0.2s; }
-        tr:hover td { background: rgba(255, 237, 0, 0.1); color: var(--fenz-yellow); }
+        th {
+            text-align: left;
+            padding: 15px;
+            background: var(--table-header);
+            color: #94a3b8;
+            font-size: 0.8rem;
+            border-bottom: 1px solid var(--border-color);
+        }
 
-        .btn-delete {
-            background: transparent;
+        td {
+            padding: 15px;
+            background: var(--row-bg);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:hover td {
+            background: rgba(255, 237, 0, 0.05);
+        }
+
+        .btn-remove {
             color: var(--fenz-red);
+            background: transparent;
             border: 1px solid var(--fenz-red);
-            padding: 5px 10px;
+            padding: 4px 10px;
             cursor: pointer;
             font-family: 'Industry-BoldItalic';
+        }
+
+        .btn-remove:hover {
+            background: var(--fenz-red);
+            color: white;
         }
     </style>
 </head>
 <body>
 
-    <div class="emergency-banner">
-        <p class="emergency-text">IN EMERGENCIES</p>
-        <span class="emergency-number">Call 111</span>
+    <div class="roster-nav">
+        <a href="roster.html" class="nav-item">FIRE ROSTER</a>
+        <a href="ntc.html" class="nav-item">NTC ROSTER</a>
+        <a href="comms.html" class="nav-item">COMMS ROSTER</a>
+        <button class="modify-toggle" onclick="toggleModifier()">MODIFY ROSTER ▾</button>
     </div>
 
-    <nav class="roster-nav">
-        <a href="roster.html" class="nav-item">Fire Roster</a>
-        <a href="ntc.html" class="nav-item">NTC Roster</a>
-        <a href="comms.html" class="nav-item">Comms Roster</a>
-    </nav>
-
-    <div class="admin-card">
+    <div id="modifier-section">
         <div class="form-grid">
             <input type="text" id="pName" placeholder="PERSONNEL NAME">
             
             <select id="pRank">
                 <option value="" disabled selected>SELECT RANK</option>
-                <optgroup label="COMCEN (Communication Centre)">
-                    <option value="COMCEN | Operations Manager">Operations Manager</option>
-                    <option value="COMCEN | Shift Manager">Shift Manager</option>
-                    <option value="COMCEN | Senior Dispatcher">Senior Dispatcher</option>
-                    <option value="COMCEN | Dispatcher">Dispatcher</option>
-                    <option value="COMCEN | Trainee Dispatcher">Trainee Dispatcher</option>
-                </optgroup>
-                <optgroup label="NTC (Training Centre)">
-                    <option value="Head Of National Training Centre">Head Of National Training Centre</option>
-                    <option value="Head Of Region 4 Training Centre">Head Of Region 4 Training Centre</option>
-                    <option value="National Trainer">National Trainer</option>
-                    <option value="Region 4 Trainer">Region 4 Trainer</option>
-                </optgroup>
-                <optgroup label="Fire Ranks">
-                    <option value="Senior Station Officer">Senior Station Officer</option>
-                    <option value="Station Officer">Station Officer</option>
+                <optgroup label="Fire Division">
+                    <option value="Commander">Commander</option>
+                    <option value="Assistant National Commander">Assistant National Commander</option>
+                    <option value="Acting Station Officer">Acting Station Officer</option>
+                    <option value="Senior Firefighter">Senior Firefighter</option>
+                    <option value="Qualified Firefighter">Qualified Firefighter</option>
                     <option value="Firefighter">Firefighter</option>
-                    <option value="Volunteer Firefighter">Volunteer Firefighter</option>
+                    <option value="Rural Crew Leader">Rural Crew Leader</option>
+                    <option value="Recruit Firefighter">Recruit Firefighter</option>
+                </optgroup>
+                <optgroup label="Comms/NTC Division">
+                    <option value="Senior Dispatcher">Senior Dispatcher</option>
+                    <option value="Dispatcher">Dispatcher</option>
+                    <option value="Trainee Dispatcher">Trainee Dispatcher</option>
+                    <option value="National Trainer">National Trainer</option>
                 </optgroup>
             </select>
 
             <select id="pType">
-                <option value="roster">FIRE DIVISION</option>
+                <option value="roster">ROSTER DIVISION</option>
                 <option value="ntc">NTC DIVISION</option>
                 <option value="comms">COMMS DIVISION</option>
             </select>
 
-            <button class="btn-update" onclick="submitToFirebase()">UPDATE DATABASE</button>
+            <button class="btn-update" onclick="submitData()">UPDATE DATABASE</button>
         </div>
     </div>
 
@@ -204,6 +213,7 @@
     </table>
 
     <script>
+        // CONFIG
         const firebaseConfig = {
             apiKey: "AIzaSyDQaJgS2_Dv86YMRS_T_VNtaptfHyPAhQk",
             authDomain: "rosterproject-dedcb.firebaseapp.com",
@@ -217,23 +227,33 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        function submitToFirebase() {
+        // TOGGLE LOGIC
+        function toggleModifier() {
+            const section = document.getElementById('modifier-section');
+            if (section.style.display === "block") {
+                section.style.display = "none";
+            } else {
+                section.style.display = "block";
+            }
+        }
+
+        // DATABASE LOGIC
+        function submitData() {
             const name = document.getElementById('pName').value;
             const rank = document.getElementById('pRank').value;
             const target = document.getElementById('pType').value;
 
             if (name && rank) {
                 db.ref(target + '/').push({ name: name, rank: rank });
-                alert("Personnel Added.");
+                alert("Database Updated");
                 document.getElementById('pName').value = "";
             }
         }
 
-        const paths = ['roster', 'ntc', 'comms'];
         function loadList() {
             const display = document.getElementById('master-display');
             display.innerHTML = "";
-            paths.forEach(path => {
+            ['roster', 'ntc', 'comms'].forEach(path => {
                 db.ref(path + '/').on('value', (snapshot) => {
                     const data = snapshot.val();
                     for (let id in data) {
@@ -241,16 +261,16 @@
                             <tr>
                                 <td style="color:white; font-weight:bold;">${data[id].name}</td>
                                 <td>${data[id].rank}</td>
-                                <td>${path.toUpperCase()}</td>
-                                <td><button class="btn-delete" onclick="removeEntry('${path}', '${id}')">REMOVE</button></td>
+                                <td style="color: #94a3b8">${path.toUpperCase()}</td>
+                                <td><button class="btn-remove" onclick="deleteItem('${path}', '${id}')">REMOVE</button></td>
                             </tr>`;
                     }
                 });
             });
         }
 
-        function removeEntry(path, id) {
-            if (confirm("Remove entry?")) {
+        function deleteItem(path, id) {
+            if (confirm("Confirm removal?")) {
                 db.ref(path + '/' + id).remove();
                 location.reload();
             }
