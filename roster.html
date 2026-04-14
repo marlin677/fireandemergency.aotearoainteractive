@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Christchurch District Roster | FENZ</title>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+
     <style>
         :root {
             --fenz-red: #d42027;
@@ -24,130 +27,27 @@
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
-        /* --- NATIONAL COMMAND HOVER STYLING --- */
-        .national-bar {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
+        .national-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+        .national-card { background: var(--table-header); border-top: 3px solid var(--fenz-red); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 4px; }
+        .national-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; font-weight: 800; }
+        .hover-name { color: white; font-weight: bold; text-transform: uppercase; padding: 5px 12px; border-radius: 3px; transition: all 0.3s ease; cursor: pointer; border: 1px solid transparent; }
+        .hover-name:hover { color: var(--fenz-yellow); border-color: var(--fenz-yellow); background: rgba(255, 237, 0, 0.1); transform: scale(1.05); box-shadow: 0 0 10px rgba(255, 237, 0, 0.2); }
 
-        .national-card {
-            background: var(--table-header);
-            border-top: 3px solid var(--fenz-red);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 4px;
-        }
-
-        .national-title {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #94a3b8;
-            font-weight: 800;
-        }
-
-        .hover-name {
-            color: white;
-            font-weight: bold;
-            text-transform: uppercase;
-            padding: 5px 12px;
-            border-radius: 3px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 1px solid transparent;
-        }
-
-        .hover-name:hover {
-            color: var(--fenz-yellow);
-            border-color: var(--fenz-yellow);
-            background: rgba(255, 237, 0, 0.1);
-            transform: scale(1.05);
-            box-shadow: 0 0 10px rgba(255, 237, 0, 0.2);
-        }
-
-        /* Logo and Header Styling */
-        .header-container {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-            margin-bottom: 30px;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 20px;
-        }
-
-        .fenz-logo {
-            height: 100px;
-            width: auto;
-        }
-
+        .header-container { display: flex; align-items: center; gap: 25px; margin-bottom: 30px; border-bottom: 2px solid var(--border-color); padding-bottom: 20px; }
+        .fenz-logo { height: 100px; width: auto; }
         h1 { text-transform: uppercase; font-size: 2rem; margin: 0; color: white; }
         .back-btn { color: var(--fenz-yellow); text-decoration: none; font-weight: bold; font-size: 0.9rem; display: block; margin-bottom: 15px; }
 
-        /* --- TABLE STYLING --- */
-        .roster-container {
-            width: 100%;
-            border-collapse: collapse;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            border: 1px solid var(--border-color);
-        }
-
-        .category-header {
-            background-color: var(--table-header);
-            color: white;
-            text-align: center;
-            text-transform: uppercase;
-            font-weight: 800;
-            letter-spacing: 2px;
-            padding: 12px;
-            font-size: 0.9rem;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        th {
-            background-color: var(--table-header);
-            color: #94a3b8;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        td {
-            padding: 15px;
-            border-bottom: 1px solid var(--border-color);
-            vertical-align: top;
-        }
-
+        .roster-container { width: 100%; border-collapse: collapse; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid var(--border-color); }
+        .category-header { background-color: var(--table-header); color: white; text-align: center; text-transform: uppercase; font-weight: 800; letter-spacing: 2px; padding: 12px; font-size: 0.9rem; border-bottom: 2px solid var(--border-color); }
+        th { background-color: var(--table-header); color: #94a3b8; text-transform: uppercase; font-size: 0.75rem; padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        td { padding: 15px; border-bottom: 1px solid var(--border-color); vertical-align: top; }
         tr:nth-child(even) { background-color: var(--row-alt); }
         tr:nth-child(odd) { background-color: var(--row-bg); }
 
-        .names-list {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-            color: #fff;
-            font-weight: 500;
-        }
-
-        .status-badge {
-            background: rgba(34, 197, 94, 0.2);
-            color: var(--active-green);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            border: 1px solid var(--active-green);
-        }
-
+        .status-badge { background: rgba(34, 197, 94, 0.2); color: var(--active-green); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; border: 1px solid var(--active-green); }
         .rank-cell { font-weight: 600; color: #94a3b8; text-transform: uppercase; font-size: 0.85rem; }
         .na-text { color: #475569; font-family: monospace; }
-
     </style>
 </head>
 <body>
@@ -183,100 +83,93 @@
                 <th width="20%">Callsign</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td><ul class="names-list"><li>Ben Lewis</li></ul></td>
-                <td class="rank-cell">District Manager</td>
-                <td><span class="status-badge">Active</span></td>
-                <td class="na-text">N/A</td>
-            </tr>
-            <tr>
-                <td><ul class="names-list"><li>Ethan Brown</li></ul></td>
-                <td class="rank-cell">Group Manager</td>
-                <td><span class="status-badge">Active</span></td>
-                <td class="na-text">N/A</td>
-            </tr>
-        </tbody>
+        <tbody id="command-staff-list">
+            </tbody>
 
         <thead>
             <tr><th colspan="4" class="category-header">Station Officers</th></tr>
         </thead>
-        <tbody>
-            <tr>
-                <td><ul class="names-list"><li>Craig Blippy</li></ul></td>
-                <td class="rank-cell">Senior Station Officer</td>
-                <td><span class="status-badge">Active</span></td>
-                <td class="na-text">N/A</td>
-            </tr>
-            <tr>
-                <td><ul class="names-list"><li>Kieran Striker</li></ul></td>
-                <td class="rank-cell">Station Officer</td>
-                <td><span class="status-badge">Active</span></td>
-                <td class="na-text">N/A</td>
-            </tr>
-            <tr>
-                <td><ul class="names-list"><li>Voqqhe</li></ul></td>
-                <td class="rank-cell">Acting Station Officer</td>
-                <td><span class="status-badge">Active</span></td>
-                <td class="na-text">N/A</td>
-            </tr>
-        </tbody>
+        <tbody id="station-officers-list">
+            </tbody>
 
         <thead>
             <tr><th colspan="4" class="category-header">Firefighter Personnel</th></tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <ul class="names-list">
-                        <li>C. Tay</li>
-                        <li>Tom98562</li>
-                        <li>huso</li>
-                    </ul>
-                </td>
-                <td class="rank-cell">Senior Firefighter</td>
-                <td><span class="status-badge">Active</span></td>
-                <td class="na-text">N/A</td>
-            </tr>
-            <tr>
-                <td>
-                    <ul class="names-list">
-                        <li>Steven Manning</li>
-                        <li>CHASEP21</li>
-                        <li>Kiwi</li>
-                        <li>Ari Poriki</li>
-                    </ul>
-                </td>
-                <td class="rank-cell">Qualified Firefighter</td>
-                <td><span class="status-badge">Active</span></td>
-                <td class="na-text">N/A</td>
-            </tr>
-            <tr>
-                <td class="na-text">N/A</td>
-                <td class="rank-cell">Firefighter</td>
-                <td><span class="status-badge">Active</span></td>
-                <td class="na-text">N/A</td>
-            </tr>
-            <tr>
-                <td class="na-text">N/A</td>
-                <td class="rank-cell">Recruit Firefighter</td>
-                <td><span class="status-badge">Active</span></td>
-                <td class="na-text">N/A</td>
-            </tr>
-        </tbody>
+        <tbody id="firefighter-list">
+            </tbody>
 
         <thead>
             <tr><th colspan="4" class="category-header">Volunteer Firefighters</th></tr>
         </thead>
-        <tbody>
-            <tr>
-                <td class="na-text">N/A</td>
-                <td class="rank-cell">Volunteer Personnel</td>
-                <td><span class="status-badge">On Call</span></td>
-                <td class="na-text">N/A</td>
-            </tr>
-        </tbody>
+        <tbody id="volunteer-list">
+            </tbody>
     </table>
 
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDQaJgS2_Dv86YMRS_T_VNtaptfHyPAhQk",
+            authDomain: "rosterproject-dedcb.firebaseapp.com",
+            databaseURL: "https://rosterproject-dedcb-default-rtdb.firebaseio.com",
+            projectId: "rosterproject-dedcb",
+            storageBucket: "rosterproject-dedcb.firebasestorage.app",
+            messagingSenderId: "360647207231",
+            appId: "1:360647207231:web:e315ade217c113ae664b8a",
+            measurementId: "G-QB1HDF4WM7"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        function createRow(name, rank) {
+            return `
+                <tr>
+                    <td><div style="font-weight: bold; color: white;">${name}</div></td>
+                    <td class="rank-cell">${rank}</td>
+                    <td><span class="status-badge">Active</span></td>
+                    <td class="na-text">N/A</td>
+                </tr>
+            `;
+        }
+
+        db.ref('roster/').on('value', (snapshot) => {
+            const data = snapshot.val();
+            
+            // Reset tables
+            const sections = {
+                command: document.getElementById('command-staff-list'),
+                officers: document.getElementById('station-officers-list'),
+                firefighters: document.getElementById('firefighter-list'),
+                volunteers: document.getElementById('volunteer-list')
+            };
+
+            for (let key in sections) sections[key].innerHTML = "";
+
+            if (data) {
+                for (let id in data) {
+                    const member = data[id];
+                    const rank = member.rank;
+                    const row = createRow(member.name, rank);
+
+                    // Sorting Logic
+                    if (rank.includes("Manager")) {
+                        sections.command.innerHTML += row;
+                    } else if (rank.includes("Station Officer")) {
+                        sections.officers.innerHTML += row;
+                    } else if (rank.includes("Firefighter")) {
+                        sections.firefighters.innerHTML += row;
+                    } else {
+                        sections.volunteers.innerHTML += row;
+                    }
+                }
+            }
+            
+            // Add N/A back if a section is empty
+            for (let key in sections) {
+                if (sections[key].innerHTML === "") {
+                    sections[key].innerHTML = `<tr><td colspan="4" class="na-text" style="text-align:center;">No Personnel Assigned</td></tr>`;
+                }
+            }
+        });
+    </script>
 </body>
 </html>
