@@ -19,7 +19,6 @@
             --border-color: #2d3a54;
         }
 
-        /* Force Industry-BoldItalic on everything */
         * {
             font-family: 'Industry-BoldItalic', sans-serif !important;
             text-transform: uppercase;
@@ -35,7 +34,6 @@
 
         .back-btn { color: var(--fenz-yellow); text-decoration: none; font-weight: bold; font-size: 0.9rem; display: block; margin-bottom: 15px; }
 
-        /* Navigation Style from your screenshot */
         .roster-nav {
             display: flex;
             gap: 10px;
@@ -63,7 +61,16 @@
         }
 
         .roster-container { width: 100%; border-collapse: collapse; border: 1px solid var(--border-color); }
-        .category-header { background-color: var(--table-header); color: white; text-align: center; padding: 12px; font-size: 0.9rem; border-bottom: 2px solid var(--border-color); }
+        
+        /* Category Header Styling */
+        .rank-category-row {
+            background-color: #1e293b;
+            color: var(--fenz-yellow);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            border-left: 5px solid var(--fenz-red);
+        }
+
         th { background-color: var(--table-header); color: #94a3b8; font-size: 0.8rem; padding: 15px; text-align: left; }
         td { padding: 15px; border-bottom: 1px solid var(--border-color); background: var(--row-bg); }
         
@@ -111,39 +118,70 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
+        // Categorization Map
+        const rankCategories = [
+            { label: "National Commanders", ranks: ["ASSISTANT NATIONAL COMMANDER"] },
+            { label: "District Commanders", ranks: ["COMMANDER"] },
+            { label: "Area Commanders", ranks: ["ASSISTANT COMMANDER"] },
+            { label: "Senior Station Officers", ranks: ["SENIOR STATION OFFICER"] },
+            { label: "Station Officers", ranks: ["STATION OFFICER", "ACTING STATION OFFICER"] },
+            { label: "Senior Firefighters", ranks: ["SENIOR FIREFIGHTER"] },
+            { label: "Qualified Firefighters", ranks: ["QUALIFIED FIREFIGHTER"] },
+            { label: "Firefighters", ranks: ["FIREFIGHTER"] },
+            { label: "Recruit Firefighters", ranks: ["RECRUIT FIREFIGHTER"] }
+        ];
+
         function switchRoster(path, btnId) {
-            // UI Toggle
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById(btnId).classList.add('active');
             
             const titleText = path === 'roster' ? 'FIRE' : path;
             document.getElementById('roster-title').innerText = `${titleText} ROSTER | PERSONNEL`;
 
-            // Database Fetch
             db.ref(path + '/').on('value', (snapshot) => {
                 const list = document.getElementById('personnel-list');
                 list.innerHTML = "";
                 const data = snapshot.val();
 
                 if (data) {
-                    for (let id in data) {
-                        const member = data[id];
-                        list.innerHTML += `
-                            <tr>
-                                <td class="name-text">${member.name}</td>
-                                <td style="color:#94a3b8">${member.rank}</td>
-                                <td><span class="status-badge">ACTIVE</span></td>
-                                <td class="callsign-text">${member.callsign || 'N/A'}</td>
-                            </tr>
-                        `;
-                    }
+                    const members = Object.values(data);
+
+                    rankCategories.forEach(cat => {
+                        // Filter members belonging to this rank group
+                        const filteredMembers = members.filter(m => 
+                            m.rank && cat.ranks.includes(m.rank.toUpperCase().trim())
+                        );
+
+                        if (filteredMembers.length > 0) {
+                            // Add Category Heading
+                            list.innerHTML += `
+                                <tr>
+                                    <td colspan="4" class="rank-category-row">
+                                        ${cat.label}
+                                    </td>
+                                </tr>
+                            `;
+
+                            // Add Members for this rank
+                            filteredMembers.forEach(member => {
+                                list.innerHTML += `
+                                    <tr>
+                                        <td class="name-text">${member.name}</td>
+                                        <td style="color:#94a3b8">${member.rank}</td>
+                                        <td><span class="status-badge">ACTIVE</span></td>
+                                        <td class="callsign-text">${member.callsign || 'N/A'}</td>
+                                    </tr>
+                                `;
+                            });
+                        }
+                    });
                 } else {
                     list.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:30px; color:#475569;">NO PERSONNEL ASSIGNED</td></tr>`;
                 }
             });
         }
 
-        // Initialize on Fire Roster
+        // Default Load
         switchRoster('roster', 'btn-fire');
     </script>
 </body>
