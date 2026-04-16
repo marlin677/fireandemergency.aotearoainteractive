@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Internal Portal | FENZ</title>
+    <title>Internal Portal | FENZ Christchurch</title>
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/marlin677/marlin77.github.io/main/FIRE%20AND%20EMERGENCY%20LOGO%201.png">
+    
     <link href="https://db.onlinewebfonts.com/c/30c7488235dccc1b4f5dd8ad33a47ddb?family=Industry-BoldItalic" rel="stylesheet">
 
     <style>
@@ -13,10 +14,17 @@
             --fenz-yellow: #ffed00;
             --dark-blue: #0b1120;
             --card-bg: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
             --accent-glow: rgba(212, 32, 39, 0.5);
+            --discord-blurple: #5865F2;
         }
 
-        * { box-sizing: border-box; font-family: 'Industry-BoldItalic', sans-serif; }
+        /* Applying the requested font globally */
+        * {
+            box-sizing: border-box;
+            font-family: 'Industry-BoldItalic', sans-serif !important;
+            text-transform: uppercase;
+        }
 
         body, html {
             margin: 0; padding: 0;
@@ -24,26 +32,18 @@
             color: white;
             scroll-behavior: smooth;
             overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #111a2e 0%, #0b1120 100%);
         }
 
-        /* --- BACKGROUND EFFECTS --- */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, #111a2e 0%, #0b1120 100%);
-            z-index: -2;
-        }
-
-        /* Anti-Theft Watermark */
+        /* Copyright Watermark */
         body::after {
             content: "Developed by Marlin_Mayhem | Copyrighted to Aotearoa Interactive";
-            position: fixed; bottom: 10px; right: 15px; opacity: 0.2;
+            position: fixed; bottom: 10px; right: 15px; opacity: 0.15;
             font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase;
             pointer-events: none; z-index: 9999;
         }
 
-        /* --- MODERN HEADER --- */
+        /* --- HEADER --- */
         .header-main {
             display: flex;
             justify-content: space-between;
@@ -55,15 +55,12 @@
             position: sticky; top: 0; z-index: 1000;
         }
 
-        .logo-box img { height: 60px; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); }
-
-        .emergency-contact { text-align: right; }
-        .emergency-label { font-size: 0.8rem; color: var(--fenz-yellow); letter-spacing: 2px; }
+        .logo img { height: 60px; }
         .emergency-number { font-size: 2.2rem; color: white; font-weight: 900; line-height: 1; }
 
-        /* --- HERO SECTION --- */
+        /* --- HERO & OPERATIONAL LANDING --- */
         .hero {
-            height: 85vh;
+            height: 90vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -74,235 +71,274 @@
             border-bottom: 10px solid var(--fenz-red);
         }
 
-        .hero-content {
+        .landing-container {
             width: 90%;
-            max-width: 1400px;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 50px;
+            max-width: 1600px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
         }
 
-        .hero-text h1 {
-            font-size: 6rem;
+        .hero-title h1 {
+            font-size: 5.5rem;
             line-height: 0.85;
             margin: 0;
-            text-transform: uppercase;
             text-shadow: 4px 4px 0px var(--fenz-red);
         }
 
-        /* --- FANCY MENU --- */
-        .module-selector {
-            background: var(--card-bg);
-            padding: 40px;
-            border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(15px);
+        /* --- COMMAND MODULE MENU --- */
+        .command-menu {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
+            max-width: 600px;
         }
 
-        .menu-item {
+        .menu-module {
             text-decoration: none;
             color: white;
-            background: rgba(255,255,255,0.05);
-            padding: 20px;
-            text-align: center;
-            border-bottom: 3px solid transparent;
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .menu-item:hover {
-            background: var(--fenz-red);
-            border-bottom-color: var(--fenz-yellow);
-            transform: translateY(-5px);
-        }
-
-        .menu-item span { font-size: 0.7rem; color: var(--fenz-yellow); opacity: 0.8; }
-        .menu-item b { font-size: 1.2rem; letter-spacing: 1px; }
-
-        /* --- DISTRICT FLEET SECTION --- */
-        .fleet-section {
-            padding: 100px 5%;
-            max-width: 1600px;
-            margin: auto;
-        }
-
-        .section-title {
-            font-size: 3rem;
-            border-left: 10px solid var(--fenz-red);
-            padding-left: 20px;
-            margin-bottom: 50px;
-            text-transform: uppercase;
-        }
-
-        .fleet-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-        }
-
-        .fleet-card {
             background: var(--card-bg);
-            border: 1px solid var(--fenz-red);
-            padding: 0;
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            text-align: center;
+            position: relative;
             overflow: hidden;
             transition: 0.3s;
         }
 
-        .fleet-card:hover {
-            box-shadow: 0 0 30px var(--accent-glow);
-            transform: scale(1.02);
+        .menu-module:hover {
+            border-color: var(--fenz-yellow);
+            box-shadow: 0 0 20px var(--accent-glow);
+            transform: scale(1.03);
         }
 
-        .fleet-img {
+        .menu-module::after {
+            content: '';
+            position: absolute; bottom: 0; left: 0;
+            width: 100%; height: 3px;
+            background: var(--fenz-red);
+            transition: 0.3s;
+        }
+
+        .menu-module:hover::after {
+            background: var(--fenz-yellow);
+        }
+
+        .module-id { color: var(--fenz-yellow); font-size: 0.7rem; opacity: 0.8; letter-spacing: 2px; }
+        .module-name { font-size: 1.3rem; margin-top: 5px; font-weight: bold; }
+
+        /* --- DISCORD CONNECT --- */
+        .discord-btn {
+            grid-column: 1 / -1;
+            background: var(--discord-blurple);
+            border: 1px solid var(--discord-blurple);
+            color: white;
+            text-decoration: none;
+            padding: 15px;
+            font-size: 1rem;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .discord-btn:hover { background: #4752c4; transform: scale(1.02); }
+
+        /* --- REDESIGNED FOOTER SYSTEM --- */
+        footer {
+            background-color: #080d1a;
+            padding: 80px 5% 40px 5%;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .footer-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1600px;
+            margin: auto;
+        }
+
+        .footer-group h3 {
+            color: var(--fenz-yellow);
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--fenz-red);
+            padding-left: 15px;
+        }
+
+        .footer-links a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            transition: 0.3s;
+            text-transform: none; /* Keeps email/discord links case-correct */
+        }
+
+        .footer-links a:hover {
+            color: var(--fenz-yellow);
+            padding-left: 10px;
+        }
+
+        /* --- FOOTER BANNER & FLEET PHOTOS --- */
+        .fleet-banner {
+            max-width: 1600px;
+            margin: 60px auto;
+            border-top: 2px solid var(--border-color);
+            padding-top: 40px;
+            text-align: center;
+        }
+
+        .fleet-section-title { color: white; font-size: 1.5rem; letter-spacing: 3px; margin-bottom: 25px; }
+
+        .fleet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 20px;
+        }
+
+        .fleet-photo {
             width: 100%;
             height: 200px;
             background-color: #000;
             background-size: cover;
             background-position: center;
+            border: 1px solid var(--border-color);
+            position: relative;
         }
 
-        .fleet-info { padding: 25px; }
-        .fleet-id { color: var(--fenz-yellow); font-size: 0.8rem; margin-bottom: 5px; }
-        .fleet-name { font-size: 1.8rem; margin-bottom: 15px; }
-        
-        .status-pill {
-            display: inline-block;
-            background: #22c55e;
+        .fleet-photo:hover { border-color: var(--fenz-red); }
+
+        .fleet-tag {
+            position: absolute; bottom: 0; left: 0;
+            background: rgba(0,0,0,0.8);
+            color: white;
             padding: 5px 15px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: bold;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
         }
 
-        /* --- SAFETY CARDS --- */
-        .facts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 50px;
+        /* --- BOTTOM BAR --- */
+        .bottom-bar {
+            max-width: 1600px;
+            margin: 60px auto 0 auto;
+            border-top: 1px solid var(--border-color);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            color: #475569;
+            font-size: 0.8rem;
         }
-
-        .fact-card {
-            background: rgba(212, 32, 39, 0.1);
-            padding: 30px;
-            border-left: 4px solid var(--fenz-red);
-        }
-
-        .fact-card h3 { color: var(--fenz-yellow); margin-top: 0; }
 
     </style>
 </head>
 <body onselectstart="return false">
 
     <header class="header-main">
-        <div class="logo-box">
+        <div class="logo">
             <img src="https://raw.githubusercontent.com/marlin677/marlin77.github.io/main/FIRE%20AND%20EMERGENCY%20LOGO%201.png" alt="FENZ">
         </div>
 
-        <div class="emergency-contact">
-            <div class="emergency-label">NATIONAL EMERGENCY LINE</div>
-            <div class="emergency-number">CALL 111</div>
+        <div class="emergency-contact" style="text-align: right;">
+            <div class="emergency-label" style="color: var(--fenz-yellow); font-size: 0.8rem; letter-spacing: 2px;">In Emergencies</div>
+            <div class="emergency-number">Call 111</div>
         </div>
     </header>
 
     <section class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <p style="color: var(--fenz-yellow); letter-spacing: 5px; font-weight: bold;">OPERATIONAL PORTAL</p>
+        <div class="landing-container">
+            <div class="hero-title">
+                <p style="color: var(--fenz-yellow); letter-spacing: 5px; font-weight: bold; margin-bottom: 10px;">Operational Portal</p>
                 <h1>WHAKARATONGA<br>IWI<br>MATAARA.</h1>
-                <p style="font-size: 1.2rem; color: #cbd5e1; text-transform: none; margin-top: 20px;">
-                    Serving New Zealand communities with professionalism and bravery. 
-                    Ledges and terrain may vary, but our commitment remains absolute.
-                </p>
             </div>
 
-            <nav class="module-selector">
-                <a href="leadership.html" class="menu-item">
-                    <span>COMMAND</span>
-                    <b>DISTRICT LEADERSHIP</b>
+            <nav class="command-menu">
+                <a href="leadership.html" class="menu-module">
+                    <span class="module-id">COMMAND</span>
+                    <b class="module-name">DISTRICT LEADERSHIP</b>
                 </a>
-                <a href="ranks.html" class="menu-item">
-                    <span>STRUCTURE</span>
-                    <b>DEPARTMENT RANKS</b>
+                <a href="ranks.html" class="menu-module">
+                    <span class="module-id">STRUCTURE</span>
+                    <b class="module-name">DEPARTMENT RANKS</b>
                 </a>
-                <a href="roster.html" class="menu-item">
-                    <span>PERSONNEL</span>
-                    <b>NATIONAL ROSTER</b>
+                <a href="roster.html" class="menu-module">
+                    <span class="module-id">PERSONNEL</span>
+                    <b class="module-name">NATIONAL ROSTER</b>
                 </a>
-                <a href="policies.html" class="menu-item">
-                    <span>PROTOCOL</span>
-                    <b>STATION POLICIES</b>
+                <a href="policies.html" class="menu-module">
+                    <span class="module-id">PROTOCOL</span>
+                    <b class="module-name">STATION POLICIES</b>
                 </a>
-                <a href="commander-login.html" class="menu-item" style="grid-column: 1 / -1; border-color: var(--fenz-yellow);">
-                    <span style="color: white;">RESTRICTED ACCESS</span>
-                    <b style="color: var(--fenz-yellow);">LEADERSHIP LOGIN</b>
+                
+                <a href="commander-login.html" class="menu-module" style="grid-column: 1 / -1; background: var(--fenz-red); border-color: var(--fenz-red);">
+                    <span class="module-id" style="color: white;">RESTRICTED</span>
+                    <b class="module-name" style="color: var(--fenz-yellow);">Leadership Login</b>
                 </a>
+                
+                <a href="https://discord.gg/JCKE2StE" target="_blank" class="discord-btn">JOIN OPERATIONAL DISCORD</a>
             </nav>
         </div>
     </section>
 
-    <section class="fleet-section">
-        <h2 class="section-title">District Fleet</h2>
-        <div class="fleet-grid">
-            
-            <div class="fleet-card">
-                <div class="fleet-img" style="background-image: url('https://raw.githubusercontent.com/marlin677/shitty/main/image%20(1).png');"></div>
-                <div class="fleet-info">
-                    <div class="fleet-id">TYPE 3 PUMPER // SCANIA</div>
-                    <div class="fleet-name">CHRI217</div>
-                    <div class="status-pill">OPERATIONAL</div>
+    <footer>
+        <div class="footer-nav">
+            <div class="footer-group">
+                <h3>Portal Navigation</h3>
+                <div class="footer-links">
+                    <a href="leadership.html">District Leadership</a>
+                    <a href="ranks.html">Rank Structure & Duties</a>
+                    <a href="roster.html">Operational Roster</a>
+                    <a href="policies.html">Operational Manual & Policies</a>
                 </div>
             </div>
 
-            <div class="fleet-card">
-                <div class="fleet-img" style="background-image: url('https://raw.githubusercontent.com/marlin677/shitty/main/image%20(2).png');"></div>
-                <div class="fleet-info">
-                    <div class="fleet-id">HEAVY PUMPER // MAN</div>
-                    <div class="fleet-name">AKLD111</div>
-                    <div class="status-pill">OPERATIONAL</div>
+            <div class="footer-group">
+                <h3>Contact Admin</h3>
+                <div class="footer-links">
+                    <p style="color: white; margin-bottom: 5px;">Server & Portal Inquiries:</p>
+                    <a href="mailto:skyrimprime77@gmail.com" style="text-transform: none; color: var(--fenz-yellow);">skyrimprime77@gmail.com</a>
                 </div>
             </div>
 
-            <div class="fleet-card">
-                <div class="fleet-img" style="background-image: url('https://raw.githubusercontent.com/marlin677/shitty/main/image%20(3).png');"></div>
-                <div class="fleet-info">
-                    <div class="fleet-id">OFF-ROAD 4X4 // IVECO</div>
-                    <div class="fleet-name">WRKW551</div>
-                    <div class="status-pill">OPERATIONAL</div>
+            <div class="footer-group">
+                <h3>Operational Discord</h3>
+                <div class="footer-links">
+                    <p style="color: white; margin-bottom: 5px;">Required for Communication:</p>
+                    <a href="https://discord.gg/JCKE2StE" target="_blank" style="color: var(--discord-blurple);">https://discord.gg/JCKE2StE</a>
                 </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="fleet-section" id="safety-facts" style="background: rgba(255,255,255,0.02); padding: 80px 5%;">
-        <h2 class="section-title">Safety & Protocol</h2>
-        <div class="facts-grid">
-            <div class="fact-card">
-                <h3>Smoke Alarm Compliance</h3>
-                <p>Working smoke alarms are required in every bedroom and hallway. Response time is critical.</p>
-            </div>
-            <div class="fact-card">
-                <h3>Deadly House Fires</h3>
-                <p>A house fire becomes lethal in under 3 minutes. Our mission is to reduce this risk through community education.</p>
-            </div>
-            <div class="fact-card">
-                <h3>Tactical Escape</h3>
-                <p>Always identify two ways out of every room. In high-immersion scenarios, scene safety is the SSO's priority.</p>
             </div>
         </div>
-    </section>
+
+        <div class="fleet-banner">
+            <h4 class="fleet-section-title">Christchurch District Fleet</h4>
+            <div class="fleet-grid">
+                
+                <div class="fleet-photo" style="background-image: url('https://raw.githubusercontent.com/marlin677/shitty/main/image%20(1).png');">
+                    <span class="fleet-tag">CHRI217 // SCANIA TYPE 3</span>
+                </div>
+                
+                <div class="fleet-photo" style="background-image: url('https://raw.githubusercontent.com/marlin677/shitty/main/image%20(2).png');">
+                    <span class="fleet-tag">AKLD111 // MAN TYPE 4</span>
+                </div>
+                
+                <div class="fleet-photo" style="background-image: url('https://raw.githubusercontent.com/marlin677/shitty/main/image%20(3).png');">
+                    <span class="fleet-tag">WRKW551 // IVECO technical</span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="bottom-bar">
+            <span>&copy; Fire and Emergency New Zealand 2026 // Operational Portal</span>
+            <span>Internal Document 01-A</span>
+        </div>
+    </footer>
 
     <script>
         // Disable Right-Click
         document.addEventListener('contextmenu', event => event.preventDefault());
 
-        // Disable Dev Tools
+        // Disable F12, Ctrl+Shift+I, Ctrl+U
         document.onkeydown = function(e) {
             if (e.keyCode == 123 || 
                 (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) || 
