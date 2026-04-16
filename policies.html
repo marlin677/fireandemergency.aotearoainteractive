@@ -3,182 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Department Policies | FENZ Style</title>
+    <title>FENZ | National Operational Manual</title>
+    
+    <link href="https://db.onlinewebfonts.com/c/30c7488235dccc1b4f5dd8ad33a47ddb?family=Industry-BoldItalic" rel="stylesheet">
+
     <style>
         :root {
             --fenz-red: #d42027;
             --fenz-yellow: #ffed00;
-            --dark-bg: #1a1a1a;
-            --slate-bg: #111a2e;
+            --dark-blue: #0b1120;
+            --card-bg: #162036;
+            --border-color: #2d3a54;
         }
 
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+            font-family: 'Industry-BoldItalic', sans-serif !important;
+            text-transform: uppercase;
+        }
 
-        body, html {
+        body {
             margin: 0;
             padding: 0;
-            background-color: var(--dark-bg);
-            color: white;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            line-height: 1.6;
+            background-color: var(--dark-blue);
+            color: #e2e8f0;
         }
 
-        .header-mini {
-            background-color: var(--slate-bg);
-            padding: 20px 4%;
+        header {
+            background-color: #080d1a;
+            padding: 15px 5%;
             border-bottom: 4px solid var(--fenz-red);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
         }
 
-        .logo-small img { height: 50px; }
+        .logo img { height: 60px; }
 
         .back-link {
             color: var(--fenz-yellow);
             text-decoration: none;
-            font-weight: bold;
-            text-transform: uppercase;
             font-size: 0.9rem;
+            border: 1px solid var(--fenz-yellow);
+            padding: 8px 15px;
+            transition: 0.3s;
+        }
+
+        .hero {
+            margin-top: 100px;
+            padding: 60px 5%;
+            background: linear-gradient(rgba(11, 17, 32, 0.9), rgba(11, 17, 32, 0.9)), url('https://raw.githubusercontent.com/marlin677/marlin77.github.io/main/FIRE%20AND%20EMERGENCY%20LOGO%201.png');
+            background-position: center;
+            text-align: center;
+        }
+
+        h1 { font-size: 3rem; margin: 0; color: white; }
+
+        .chapter-header {
+            grid-column: 1 / -1;
+            background: var(--fenz-red);
+            color: white;
+            padding: 15px 25px;
+            margin-top: 30px;
+            font-size: 1.5rem;
+            border-left: 8px solid var(--fenz-yellow);
         }
 
         .container {
-            max-width: 1000px;
-            margin: 60px auto;
-            padding: 0 4%;
+            padding: 40px 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
         }
-
-        h1 {
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            margin-bottom: 40px;
-            border-left: 10px solid var(--fenz-red);
-            padding-left: 20px;
-        }
-
-        .policy-group { margin-bottom: 50px; }
 
         .policy-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-left: 4px solid var(--fenz-yellow);
+            background: var(--card-bg);
+            border-left: 5px solid var(--fenz-red);
             padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 0 4px 4px 0;
-            transition: transform 0.2s;
+            transition: 0.3s;
+            cursor: pointer;
         }
 
         .policy-card:hover {
-            transform: translateX(10px);
-            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+            background: #1e2b4a;
+            border-left-color: var(--fenz-yellow);
         }
 
-        .policy-id {
-            color: var(--fenz-yellow);
-            font-weight: 900;
-            font-size: 1.1rem;
-            display: block;
-            margin-bottom: 5px;
-        }
+        .policy-id { color: var(--fenz-yellow); font-size: 1.2rem; display: block; margin-bottom: 5px; }
+        .policy-title { font-size: 1.1rem; color: white; display: block; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); }
+        .policy-desc { font-size: 0.85rem; color: #94a3b8; text-transform: none; }
 
-        .policy-title {
-            font-weight: bold;
-            text-transform: uppercase;
-            display: block;
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
-
-        .highlight { color: var(--fenz-yellow); font-weight: bold; }
+        .search-container { margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        #policySearch { width: 100%; padding: 15px; background: var(--card-bg); border: 2px solid var(--border-color); color: white; }
     </style>
 </head>
 <body>
 
-    <header class="header-mini">
-        <div class="logo-small">
-            <img src="https://raw.githubusercontent.com/marlin677/marlin77.github.io/main/FIRE%20AND%20EMERGENCY%20LOGO%201.png" alt="FENZ">
-        </div>
-        <a href="index.html" class="back-link">← Return to Portal</a>
+    <header>
+        <div class="logo"><img src="https://raw.githubusercontent.com/marlin677/marlin77.github.io/main/FIRE%20AND%20EMERGENCY%20LOGO%201.png" alt="FENZ"></div>
+        <a href="index.html" class="back-link">← DASHBOARD</a>
     </header>
 
-    <div class="container">
-        <h1>Operational Manual & Policies</h1>
-
-        <div class="policy-group">
-            
-            <div class="policy-card">
-                <span class="policy-id">1.00</span>
-                <span class="policy-title">Introduction</span>
-                <p>All personnel are expected to uphold the values of Fire and Emergency NZ, prioritizing life safety, incident stabilization, and property conservation in all actions.</p>
-            </div>
-
-            <div class="policy-card">
-                <span class="policy-id">1.01</span>
-                <span class="policy-title">Staff Conduct and Operational Interaction</span>
-                <p>Members must maintain professional conduct when interacting with other agencies. Chain of command must be respected at all times during active incidents.</p>
-            </div>
-
-            <div class="policy-card">
-                <span class="policy-id">1.02</span>
-                <span class="policy-title">Radio Guidelines</span>
-                <p>Practice <span class="highlight">Radio Silence</span> during critical incident phases. Use "Clear Speech" instead of complex codes to ensure all responding units understand instructions.</p>
-            </div>
-
-            <div class="policy-card">
-                <span class="policy-id">1.03</span>
-                <span class="policy-title">Callsign Guideline</span>
-                <p>Callsigns are assigned based on the appliance and district. Personnel must use their vehicle callsign (e.g., CHRI217) rather than personal names on all frequencies.</p>
-            </div>
-
-            <div class="policy-card">
-                <span class="policy-id">1.04</span>
-                <span class="policy-title">Radio Codes</span>
-                <p>Standardized status codes (K1, K2, K3, K4) must be used to update Dispatch on arrival, readiness, and scene status without clogging airtime.</p>
-            </div>
-
-            <div class="policy-card">
-                <span class="policy-id">1.05</span>
-                <span class="policy-title">Radio Events</span>
-                <p>In the event of a <span class="highlight">"Priority 1"</span> or "Emergency Traffic" call, all other units must cease transmission immediately until the emergency is cleared.</p>
-            </div>
-
-            <div class="policy-card">
-                <span class="policy-id">1.06</span>
-                <span class="policy-title">Equipment Basics/Usages</span>
-                <p>Specialized equipment such as the Jaws of Life, thermal cameras, and gas detectors may only be operated by personnel who have completed the relevant training modules.</p>
-            </div>
-
-            <div class="policy-card">
-                <span class="policy-id">1.07</span>
-                <span class="policy-title">Uniform Guidelines</span>
-                <p>High-visibility vests are mandatory for all roadway incidents. Full structural PPE including flash hoods is required for any interior fire operations.</p>
-            </div>
-
-            <div class="policy-card">
-                <span class="policy-id">1.08</span>
-                <span class="policy-title">Vehicle Guidelines</span>
-                <p><span class="highlight">CHRI217</span> must be fully crewed with 4 personnel before secondary trucks are utilized. Drivers must perform a 360-degree walk-around before moving any appliance.</p>
-            </div>
-
-            <div class="policy-card">
-                <span class="policy-id">1.09</span>
-                <span class="policy-title">Airdesk Guidelines</span>
-                <p>Coordination with aerial assets requires a designated ground spotter. Units must maintain a 50m exclusion zone from landing sites for helicopter operations.</p>
-            </div>
-
-            <div class="policy-card">
-                <span class="policy-id">1.10</span>
-                <span class="policy-title">Operational Support Unit (OSU) Deployment</span>
-                <p>OSU units provide lighting, hydration, and rehab. They should be staged at a "Cold Zone" location and marked clearly for all personnel to access.</p>
-            </div>
-
-            <div class="policy-card">
-                <span class="policy-id">1.11</span>
-                <span class="policy-title">MEDFR Deployment</span>
-                <p>Medical First Response units are dispatched for high-acuity medical calls. Personnel must provide a handover to Ambulance staff upon their arrival.</p>
-            </div>
-
+    <div class="hero">
+        <h1>NATIONAL OPERATIONAL MANUAL</h1>
+        <div class="search-container">
+            <input type="text" id="policySearch" onkeyup="searchPolicy()" placeholder="SEARCH POLICIES...">
         </div>
     </div>
 
+    <div class="container" id="policyGrid">
+        <div class="chapter-header">Chapter 1: Communications & Conduct</div>
+        <div class="policy-card">
+            <span class="policy-id">1.01</span><span class="policy-title">Core Values</span>
+            <p class="policy-desc">Prioritise life safety, incident stabilisation, and property conservation.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">1.02</span><span class="policy-title">Chain of Command</span>
+            <p class="policy-desc">Incident Commander (IC) holds ultimate authority. Orders must be executed immediately.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">1.03</span><span class="policy-title">Radio Silence</span>
+            <p class="policy-desc">Mandatory during critical phases or Mayday calls. No non-emergency traffic.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">1.04</span><span class="policy-title">K1 - Proceeding</span>
+            <p class="policy-desc">Appliance is mobile and en route to the incident location.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">1.05</span><span class="policy-title">K2 - On Scene</span>
+            <p class="policy-desc">Arrival at incident. Provide a SITREP within 60 seconds.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">1.06</span><span class="policy-title">K3 - Controlled</span>
+            <p class="policy-desc">Incident is under control but unit is remaining for further support.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">1.07</span><span class="policy-title">K4 - Mobile Available</span>
+            <p class="policy-desc">Appliance has left the scene and is ready for the next dispatch.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">1.08</span><span class="policy-title">K5 - In Quarters</span>
+            <p class="policy-desc">Appliance is back at the station and available for response.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">1.09</span><span class="policy-title">K9 - Off Duty</span>
+            <p class="policy-desc">Unit is unavailable due to mechanical failure or end of shift.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">1.10</span><span class="policy-title">Clear Speech</span>
+            <p class="policy-desc">Use plain English at all times. Do not use complex 10-codes.</p>
+        </div>
+
+        <div class="chapter-header">Chapter 2: Fireground Operations</div>
+        <div class="policy-card">
+            <span class="policy-id">2.00</span><span class="policy-title">Appliance Staffing</span>
+            <p class="policy-desc">Primary pumps must have a crew of 4 (Officer, Driver, 2 FFs) for structural fires.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">2.01</span><span class="policy-title">Emergency Evacuation</span>
+            <p class="policy-desc">Three long siren blasts signal immediate evacuation of all personnel from a structure.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">2.02</span><span class="policy-title">BA Entry Control</span>
+            <p class="policy-desc">No entry into smoke without a designated Entry Control Officer (ECO).</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">2.03</span><span class="policy-title">LACES Protocol</span>
+            <p class="policy-desc">Lookouts, Awareness, Communications, Escape routes, and Safety zones for wildfires.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">2.04</span><span class="policy-title">Response Driving</span>
+            <p class="policy-desc">Blue lights/sirens do not grant total immunity. Stop at all red lights.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">2.05</span><span class="policy-title">Roadway Fend-Off</span>
+            <p class="policy-desc">Park appliances at 45 degrees to protect crews from traffic.</p>
+        </div>
+        </div>
+
+    <script>
+        function searchPolicy() {
+            let input = document.getElementById('policySearch').value.toUpperCase();
+            let cards = document.getElementsByClassName('policy-card');
+            
+            for (let i = 0; i < cards.length; i++) {
+                let text = cards[i].innerText.toUpperCase();
+                cards[i].style.display = text.includes(input) ? "" : "none";
+            }
+        }
+    </script>
 </body>
 </html>
