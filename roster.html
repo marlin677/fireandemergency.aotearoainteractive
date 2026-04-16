@@ -14,9 +14,11 @@
             --fenz-red: #d42027;
             --fenz-yellow: #ffed00;
             --dark-blue: #0b1120;
-            --table-header: #111a2e;
-            --row-bg: #162036;
+            --table-header: #080d1a;
+            --row-bg: #111a2e;
+            --row-alt: #162036;
             --border-color: #2d3a54;
+            --neon-glow: rgba(212, 32, 39, 0.4);
         }
 
         * {
@@ -30,74 +32,126 @@
             padding: 40px;
             background-color: var(--dark-blue);
             color: #e2e8f0;
+            background-image: radial-gradient(circle at center, #111a2e 0%, #0b1120 100%);
         }
 
-        .back-btn { color: var(--fenz-yellow); text-decoration: none; font-weight: bold; font-size: 0.9rem; display: block; margin-bottom: 15px; }
+        .back-btn { 
+            color: var(--fenz-yellow); 
+            text-decoration: none; 
+            font-weight: bold; 
+            font-size: 0.9rem; 
+            display: inline-block; 
+            margin-bottom: 25px;
+            border-bottom: 2px solid transparent;
+            transition: 0.3s;
+        }
+        .back-btn:hover { border-bottom: 2px solid var(--fenz-yellow); }
 
         .roster-nav {
             display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
+            gap: 15px;
+            margin-bottom: 35px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
+            padding-bottom: 20px;
         }
 
         .nav-item {
             text-decoration: none;
             color: #94a3b8;
-            background: var(--table-header);
-            padding: 12px 25px;
-            border-radius: 4px;
+            background: rgba(17, 26, 46, 0.8);
+            padding: 14px 30px;
+            border-radius: 2px;
             font-size: 0.9rem;
             cursor: pointer;
-            border: 1px solid transparent;
-            transition: 0.3s;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
         }
+
+        .nav-item:hover { background: #1e293b; color: white; }
 
         .nav-item.active {
             background: var(--fenz-red);
             color: white;
-            border-bottom: 3px solid var(--fenz-yellow);
+            border-color: var(--fenz-red);
+            box-shadow: 0 0 15px var(--neon-glow);
         }
 
-        .roster-container { width: 100%; border-collapse: collapse; border: 1px solid var(--border-color); }
-        
-        /* Category Header Styling */
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .roster-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 4px;
+        }
+
+        th {
+            background-color: var(--table-header);
+            color: #64748b;
+            font-size: 0.75rem;
+            padding: 20px;
+            text-align: left;
+            border-bottom: 2px solid var(--fenz-red);
+        }
+
+        /* Centered Category Headers */
         .rank-category-row {
-            background-color: #1e293b;
-            color: var(--fenz-yellow);
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            border-left: 5px solid var(--fenz-red);
+            background: linear-gradient(90deg, transparent, var(--fenz-red), transparent) !important;
+            color: white !important;
+            font-size: 1.2rem !important;
+            font-weight: 900 !important;
+            letter-spacing: 5px;
+            text-align: center !important;
+            padding: 25px 0 !important;
+            border: none !important;
         }
 
-        th { background-color: var(--table-header); color: #94a3b8; font-size: 0.8rem; padding: 15px; text-align: left; }
-        td { padding: 15px; border-bottom: 1px solid var(--border-color); background: var(--row-bg); }
-        
-        .callsign-text { color: var(--fenz-yellow); font-weight: bold; }
-        .name-text { color: white; font-weight: bold; }
-        .status-badge { color: #22c55e; border: 1px solid #22c55e; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; }
+        tr.member-row:nth-child(even) td { background: var(--row-alt); }
+        tr.member-row td { 
+            padding: 18px 20px; 
+            background: var(--row-bg);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .name-text { color: white; font-size: 1.1rem; }
+        .rank-text { color: #94a3b8; font-size: 0.9rem; }
+        .callsign-text { color: var(--fenz-yellow); font-weight: 900; font-size: 1rem; }
+
+        .status-badge {
+            color: #22c55e;
+            border: 1px solid #22c55e;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            background: rgba(34, 197, 94, 0.1);
+        }
     </style>
 </head>
 <body>
 
-    <a href="index.html" class="back-btn">← BACK TO DASHBOARD</a>
+    <a href="index.html" class="back-btn">← RETURN TO COMMAND DASHBOARD</a>
 
     <nav class="roster-nav">
-        <div class="nav-item active" id="btn-fire" onclick="switchRoster('roster', 'btn-fire')">FIRE ROSTER</div>
-        <div class="nav-item" id="btn-ntc" onclick="switchRoster('ntc', 'btn-ntc')">NTC ROSTER</div>
-        <div class="nav-item" id="btn-comms" onclick="switchRoster('comms', 'btn-comms')">COMMS ROSTER</div>
+        <div class="nav-item active" id="btn-fire" onclick="switchRoster('roster', 'btn-fire')">FIRE OPS</div>
+        <div class="nav-item" id="btn-ntc" onclick="switchRoster('ntc', 'btn-ntc')">TRAINING (NTC)</div>
+        <div class="nav-item" id="btn-comms" onclick="switchRoster('comms', 'btn-comms')">COMMS CENTRE</div>
     </nav>
 
     <h1 id="roster-title">FIRE ROSTER | PERSONNEL</h1>
 
-    <table class="roster-container">
+    <table class="roster-table">
         <thead>
             <tr>
-                <th width="35%">Personnel Name</th>
-                <th width="25%">Rank</th>
-                <th width="20%">Status</th>
-                <th width="20%">Callsign</th>
+                <th width="35%">PERSONNEL NAME</th>
+                <th width="25%">DESIGNATED RANK</th>
+                <th width="20%">DUTY STATUS</th>
+                <th width="20%">RADIO CALLSIGN</th>
             </tr>
         </thead>
         <tbody id="personnel-list">
@@ -105,6 +159,7 @@
     </table>
 
     <script>
+        // Use your existing Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyDQaJgS2_Dv86YMRS_T_VNtaptfHyPAhQk",
             authDomain: "rosterproject-dedcb.firebaseapp.com",
@@ -118,17 +173,16 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // Categorization Map
         const rankCategories = [
-            { label: "National Commanders", ranks: ["ASSISTANT NATIONAL COMMANDER"] },
-            { label: "District Commanders", ranks: ["COMMANDER"] },
-            { label: "Area Commanders", ranks: ["ASSISTANT COMMANDER"] },
-            { label: "Senior Station Officers", ranks: ["SENIOR STATION OFFICER"] },
-            { label: "Station Officers", ranks: ["STATION OFFICER", "ACTING STATION OFFICER"] },
-            { label: "Senior Firefighters", ranks: ["SENIOR FIREFIGHTER"] },
-            { label: "Qualified Firefighters", ranks: ["QUALIFIED FIREFIGHTER"] },
-            { label: "Firefighters", ranks: ["FIREFIGHTER"] },
-            { label: "Recruit Firefighters", ranks: ["RECRUIT FIREFIGHTER"] }
+            { label: "NATIONAL COMMANDERS", ranks: ["ASSISTANT NATIONAL COMMANDER"] },
+            { label: "DISTRICT COMMANDERS", ranks: ["COMMANDER"] },
+            { label: "AREA COMMANDERS", ranks: ["ASSISTANT COMMANDER"] },
+            { label: "SENIOR STATION OFFICERS", ranks: ["SENIOR STATION OFFICER"] },
+            { label: "STATION OFFICERS", ranks: ["STATION OFFICER", "ACTING STATION OFFICER"] },
+            { label: "SENIOR FIREFIGHTERS", ranks: ["SENIOR FIREFIGHTER"] },
+            { label: "QUALIFIED FIREFIGHTERS", ranks: ["QUALIFIED FIREFIGHTER"] },
+            { label: "FIREFIGHTERS", ranks: ["FIREFIGHTER"] },
+            { label: "RECRUIT FIREFIGHTERS", ranks: ["RECRUIT FIREFIGHTER"] }
         ];
 
         function switchRoster(path, btnId) {
@@ -147,27 +201,25 @@
                     const members = Object.values(data);
 
                     rankCategories.forEach(cat => {
-                        // Filter members belonging to this rank group
                         const filteredMembers = members.filter(m => 
                             m.rank && cat.ranks.includes(m.rank.toUpperCase().trim())
                         );
 
                         if (filteredMembers.length > 0) {
-                            // Add Category Heading
+                            // Centered, Bold Category Heading
                             list.innerHTML += `
                                 <tr>
                                     <td colspan="4" class="rank-category-row">
-                                        ${cat.label}
+                                        --- ${cat.label} ---
                                     </td>
                                 </tr>
                             `;
 
-                            // Add Members for this rank
                             filteredMembers.forEach(member => {
                                 list.innerHTML += `
-                                    <tr>
+                                    <tr class="member-row">
                                         <td class="name-text">${member.name}</td>
-                                        <td style="color:#94a3b8">${member.rank}</td>
+                                        <td class="rank-text">${member.rank}</td>
                                         <td><span class="status-badge">ACTIVE</span></td>
                                         <td class="callsign-text">${member.callsign || 'N/A'}</td>
                                     </tr>
@@ -176,12 +228,11 @@
                         }
                     });
                 } else {
-                    list.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:30px; color:#475569;">NO PERSONNEL ASSIGNED</td></tr>`;
+                    list.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:50px; color:#475569;">NO PERSONNEL DETECTED IN DATABASE</td></tr>`;
                 }
             });
         }
 
-        // Default Load
         switchRoster('roster', 'btn-fire');
     </script>
 </body>
