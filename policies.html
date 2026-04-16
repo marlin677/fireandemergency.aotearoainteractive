@@ -86,20 +86,23 @@
             padding: 20px;
             transition: 0.3s;
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
         }
 
         .policy-card:hover {
             transform: translateY(-5px);
             background: #1e2b4a;
             border-left-color: var(--fenz-yellow);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         .policy-id { color: var(--fenz-yellow); font-size: 1.2rem; display: block; margin-bottom: 5px; }
         .policy-title { font-size: 1.1rem; color: white; display: block; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); }
-        .policy-desc { font-size: 0.85rem; color: #94a3b8; text-transform: none; }
+        .policy-desc { font-size: 0.85rem; color: #94a3b8; text-transform: none; line-height: 1.4; }
 
         .search-container { margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto; }
-        #policySearch { width: 100%; padding: 15px; background: var(--card-bg); border: 2px solid var(--border-color); color: white; }
+        #policySearch { width: 100%; padding: 15px; background: var(--card-bg); border: 2px solid var(--border-color); color: white; outline: none;}
     </style>
 </head>
 <body>
@@ -112,88 +115,166 @@
     <div class="hero">
         <h1>NATIONAL OPERATIONAL MANUAL</h1>
         <div class="search-container">
-            <input type="text" id="policySearch" onkeyup="searchPolicy()" placeholder="SEARCH POLICIES...">
+            <input type="text" id="policySearch" onkeyup="searchPolicy()" placeholder="SEARCH BY CODE OR KEYWORD (E.G. 'K2' OR 'PPE')...">
         </div>
     </div>
 
     <div class="container" id="policyGrid">
-        <div class="chapter-header">Chapter 1: Communications & Conduct</div>
+        
+        <div class="chapter-header">Chapter 1: Communications & Codes</div>
         <div class="policy-card">
-            <span class="policy-id">1.01</span><span class="policy-title">Core Values</span>
-            <p class="policy-desc">Prioritise life safety, incident stabilisation, and property conservation.</p>
+            <span class="policy-id">1.01</span><span class="policy-title">K1 - Proceeding</span>
+            <p class="policy-desc">Unit is mobile and en route. To be used immediately upon leaving the station or current location.</p>
         </div>
         <div class="policy-card">
-            <span class="policy-id">1.02</span><span class="policy-title">Chain of Command</span>
-            <p class="policy-desc">Incident Commander (IC) holds ultimate authority. Orders must be executed immediately.</p>
+            <span class="policy-id">1.02</span><span class="policy-title">K2 - On Scene</span>
+            <p class="policy-desc">Unit has arrived. The Officer in Charge (OIC) must provide a brief situation report (SITREP) within 1 minute.</p>
         </div>
         <div class="policy-card">
-            <span class="policy-id">1.03</span><span class="policy-title">Radio Silence</span>
-            <p class="policy-desc">Mandatory during critical phases or Mayday calls. No non-emergency traffic.</p>
+            <span class="policy-id">1.03</span><span class="policy-title">K3 - Controlled</span>
+            <p class="policy-desc">The fire/incident is contained. No further spread is expected, but the unit is still committed.</p>
         </div>
         <div class="policy-card">
-            <span class="policy-id">1.04</span><span class="policy-title">K1 - Proceeding</span>
-            <p class="policy-desc">Appliance is mobile and en route to the incident location.</p>
+            <span class="policy-id">1.04</span><span class="policy-title">K4 - Available / Mobile</span>
+            <p class="policy-desc">Unit has finished the job and is available for another dispatch while returning to base.</p>
         </div>
         <div class="policy-card">
-            <span class="policy-id">1.05</span><span class="policy-title">K2 - On Scene</span>
-            <p class="policy-desc">Arrival at incident. Provide a SITREP within 60 seconds.</p>
+            <span class="policy-id">1.05</span><span class="policy-title">K5 - In Quarters</span>
+            <p class="policy-desc">Unit is back at the station, cleaned, refilled, and available for response.</p>
         </div>
         <div class="policy-card">
-            <span class="policy-id">1.06</span><span class="policy-title">K3 - Controlled</span>
-            <p class="policy-desc">Incident is under control but unit is remaining for further support.</p>
+            <span class="policy-id">1.06</span><span class="policy-title">K7 - Transporting</span>
+            <p class="policy-desc">Used by MEDFR units or support crews when accompanying a patient to a medical facility.</p>
         </div>
         <div class="policy-card">
-            <span class="policy-id">1.07</span><span class="policy-title">K4 - Mobile Available</span>
-            <p class="policy-desc">Appliance has left the scene and is ready for the next dispatch.</p>
+            <span class="policy-id">1.07</span><span class="policy-title">K9 - Off Duty</span>
+            <p class="policy-desc">Unit is non-operational due to mechanical failure, staffing, or end of volunteer availability.</p>
         </div>
         <div class="policy-card">
-            <span class="policy-id">1.08</span><span class="policy-title">K5 - In Quarters</span>
-            <p class="policy-desc">Appliance is back at the station and available for response.</p>
+            <span class="policy-id">1.08</span><span class="policy-title">Clear Speech</span>
+            <p class="policy-desc">Radio codes other than K-codes are forbidden. Use plain English to avoid confusion with other agencies.</p>
         </div>
         <div class="policy-card">
-            <span class="policy-id">1.09</span><span class="policy-title">K9 - Off Duty</span>
-            <p class="policy-desc">Unit is unavailable due to mechanical failure or end of shift.</p>
+            <span class="policy-id">1.09</span><span class="policy-title">Radio Silence</span>
+            <p class="policy-desc">Must be maintained during 'MAYDAY' or 'EMERGENCY TRAFFIC' until the IC clears the frequency.</p>
         </div>
         <div class="policy-card">
-            <span class="policy-id">1.10</span><span class="policy-title">Clear Speech</span>
-            <p class="policy-desc">Use plain English at all times. Do not use complex 10-codes.</p>
+            <span class="policy-id">1.10</span><span class="policy-title">Priority Call</span>
+            <p class="policy-desc">A 'Priority' prefix on radio allows a unit to break normal traffic for urgent operational updates.</p>
         </div>
 
         <div class="chapter-header">Chapter 2: Fireground Operations</div>
         <div class="policy-card">
             <span class="policy-id">2.00</span><span class="policy-title">Appliance Staffing</span>
-            <p class="policy-desc">Primary pumps must have a crew of 4 (Officer, Driver, 2 FFs) for structural fires.</p>
+            <p class="policy-desc">Type 1 or 2 appliances require a minimum of 4 personnel (OIC, Driver, 2 BAE Firefighters).</p>
         </div>
         <div class="policy-card">
-            <span class="policy-id">2.01</span><span class="policy-title">Emergency Evacuation</span>
-            <p class="policy-desc">Three long siren blasts signal immediate evacuation of all personnel from a structure.</p>
+            <span class="policy-id">2.01</span><span class="policy-title">360-Degree Survey</span>
+            <p class="policy-desc">The OIC must complete a full walk-around of a structure fire before committing any crews to interior attack.</p>
         </div>
         <div class="policy-card">
-            <span class="policy-id">2.02</span><span class="policy-title">BA Entry Control</span>
-            <p class="policy-desc">No entry into smoke without a designated Entry Control Officer (ECO).</p>
+            <span class="policy-id">2.02</span><span class="policy-title">Evacuation Signals</span>
+            <p class="policy-desc">If 'EVACUATE' is ordered, appliances must blast sirens for 10 seconds. All crews leave immediately.</p>
         </div>
         <div class="policy-card">
-            <span class="policy-id">2.03</span><span class="policy-title">LACES Protocol</span>
-            <p class="policy-desc">Lookouts, Awareness, Communications, Escape routes, and Safety zones for wildfires.</p>
+            <span class="policy-id">2.03</span><span class="policy-title">BA Entry Control (ECO)</span>
+            <p class="policy-desc">No crew enters a smoke-filled building without a designated ECO and a tally board.</p>
         </div>
         <div class="policy-card">
-            <span class="policy-id">2.04</span><span class="policy-title">Response Driving</span>
-            <p class="policy-desc">Blue lights/sirens do not grant total immunity. Stop at all red lights.</p>
+            <span class="policy-id">2.04</span><span class="policy-title">Structural PPE</span>
+            <p class="policy-desc">Gold/Tan Level 2 gear is mandatory for fire attack. High-vis is required for all external ops.</p>
         </div>
         <div class="policy-card">
-            <span class="policy-id">2.05</span><span class="policy-title">Roadway Fend-Off</span>
-            <p class="policy-desc">Park appliances at 45 degrees to protect crews from traffic.</p>
+            <span class="policy-id">2.05</span><span class="policy-title">Water Supply</span>
+            <p class="policy-desc">The first pump should lay its own supply. A second pump may be tasked with boosting the hydrant.</p>
         </div>
+        <div class="policy-card">
+            <span class="policy-id">2.06</span><span class="policy-title">Ventilation Protocol</span>
+            <p class="policy-desc">Positive Pressure Ventilation (PPV) must only be used after a clear 'Exit Path' is identified.</p>
         </div>
+        <div class="policy-card">
+            <span class="policy-id">2.07</span><span class="policy-title">Wildfire LACES</span>
+            <p class="policy-desc">Lookouts, Awareness, Communications, Escape routes, and Safety zones must be active on every grass fire.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">2.08</span><span class="policy-title">Monsoon Buckets</span>
+            <p class="policy-desc">Ground crews must maintain a 50m exclusion zone from air-drop targets for safety.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">2.09</span><span class="policy-title">Hazardous Materials</span>
+            <p class="policy-desc">Initial response must stay uphill and upwind. Establish a 100m cordon for unknown leaks.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">2.10</span><span class="policy-title">Technical Rescue</span>
+            <p class="policy-desc">Specialist squads (USAR/Line Rescue) must be called for incidents involving height or entrapment.</p>
+        </div>
+
+        <div class="chapter-header">Chapter 3: Safety & Vehicle Standards</div>
+        <div class="policy-card">
+            <span class="policy-id">3.00</span><span class="policy-title">Response Driving</span>
+            <p class="policy-desc">Blue lights and sirens do not exempt drivers from the Land Transport Act. Safe speed is paramount.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">3.01</span><span class="policy-title">Intersection Safety</span>
+            <p class="policy-desc">Appliances must slow to a crawl or stop at all red lights and stop signs, even when responding.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">3.02</span><span class="policy-title">Vehicle Fending</span>
+            <p class="policy-desc">Park appliances at a 45-degree angle to create a 'fend-off' zone that protects the crew from traffic.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">3.03</span><span class="policy-title">MVA Battery Isolation</span>
+            <p class="policy-desc">Always isolate the negative terminal first. For EVs, follow the 'No-Cut' orange cable rule.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">3.04</span><span class="policy-title">Sharps & Biohazards</span>
+            <p class="policy-desc">All used needles must go in the yellow bin. Contaminated gear must be double-bagged for cleaning.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">3.05</span><span class="policy-title">Alcohol & Drugs</span>
+            <p class="policy-desc">FENZ has a zero-tolerance policy. Personnel must be 100% fit for duty at all times.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">3.06</span><span class="policy-title">Social Media</span>
+            <p class="policy-desc">Posting photos of patients, victims, or sensitive fire scenes is a sackable offense.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">3.07</span><span class="policy-title">Cancer Prevention</span>
+            <p class="policy-desc">Dirty turnout gear is NOT a badge of honor. Wash gear immediately after exposure to smoke.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">3.08</span><span class="policy-title">Station Cleanliness</span>
+            <p class="policy-desc">Appliances must be refuelled and cleaned immediately after a call to ensure operational readiness.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">3.09</span><span class="policy-title">Chain of Command</span>
+            <p class="policy-desc">Respect the rank structure. All on-scene grievances must be handled via the OIC post-incident.</p>
+        </div>
+        <div class="policy-card">
+            <span class="policy-id">3.10</span><span class="policy-title">Professional Conduct</span>
+            <p class="policy-desc">Treat the public and other agencies (Police/St John) with respect at all times.</p>
+        </div>
+
+    </div>
 
     <script>
         function searchPolicy() {
             let input = document.getElementById('policySearch').value.toUpperCase();
             let cards = document.getElementsByClassName('policy-card');
+            let headers = document.getElementsByClassName('chapter-header');
             
             for (let i = 0; i < cards.length; i++) {
                 let text = cards[i].innerText.toUpperCase();
-                cards[i].style.display = text.includes(input) ? "" : "none";
+                if (text.includes(input)) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+
+            // Hide headers if no cards are visible in that section (optional polish)
+            for (let j = 0; j < headers.length; j++) {
+                // Simplification: Headers stay visible for now to maintain structure
             }
         }
     </script>
