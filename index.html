@@ -172,50 +172,12 @@
             font-size: 0.95rem;
             margin-bottom: 12px;
             transition: 0.3s;
-            text-transform: none; /* Keeps email/discord links case-correct */
+            text-transform: none;
         }
 
         .footer-links a:hover {
             color: var(--fenz-yellow);
             padding-left: 10px;
-        }
-
-        /* --- FOOTER BANNER & FLEET PHOTOS --- */
-        .fleet-banner {
-            max-width: 1600px;
-            margin: 60px auto;
-            border-top: 2px solid var(--border-color);
-            padding-top: 40px;
-            text-align: center;
-        }
-
-        .fleet-section-title { color: white; font-size: 1.5rem; letter-spacing: 3px; margin-bottom: 25px; }
-
-        .fleet-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 20px;
-        }
-
-        .fleet-photo {
-            width: 100%;
-            height: 200px;
-            background-color: #000;
-            background-size: cover;
-            background-position: center;
-            border: 1px solid var(--border-color);
-            position: relative;
-        }
-
-        .fleet-photo:hover { border-color: var(--fenz-red); }
-
-        .fleet-tag {
-            position: absolute; bottom: 0; left: 0;
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 5px 15px;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
         }
 
         /* --- BOTTOM BAR --- */
@@ -234,42 +196,6 @@
 </head>
 <body onselectstart="return false">
 
-    <div id="ops-halt-overlay" style="
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(11, 17, 32, 0.95);
-        backdrop-filter: blur(15px);
-        z-index: 10000;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        border: 10px solid var(--fenz-red);
-    ">
-        <img src="https://raw.githubusercontent.com/marlin677/marlin77.github.io/main/FIRE%20AND%20EMERGENCY%20LOGO%201.png" 
-             style="height: 120px; margin-bottom: 30px; filter: drop-shadow(0 0 10px var(--fenz-red));">
-        
-        <h1 style="color: var(--fenz-red); font-size: 4rem; margin: 0; text-shadow: 2px 2px 0px white;">OPERATIONS HALTED</h1>
-        
-        <div style="width: 100px; height: 4px; background: var(--fenz-yellow); margin: 20px 0;"></div>
-        
-        <p style="font-size: 1.5rem; color: white; max-width: 700px; line-height: 1.4; padding: 0 20px;">
-            All portal operations have been suspended until further notice. 
-            Access will be restored once a formal return-to-duty time is disclosed by district command.
-        </p>
-
-        <p style="color: var(--fenz-yellow); margin-top: 40px; letter-spacing: 2px;">
-            SORRY FOR THE INCONVENIENCE — FIRE LEADERSHIP
-        </p>
-        
-        <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 10px; text-transform: none;">
-            Contact <strong>marlin_mayhem</strong> on Discord for issues.
-        </p>
-    </div>
     <header class="header-main">
         <div class="logo">
             <img src="https://raw.githubusercontent.com/marlin677/marlin77.github.io/main/FIRE%20AND%20EMERGENCY%20LOGO%201.png" alt="FENZ">
@@ -301,9 +227,9 @@
                     <span class="module-id">PERSONNEL</span>
                     <b class="module-name">NATIONAL ROSTER</b>
                 </a>
-                <a href="policies.html" class="menu-module">
-                    <span class="module-id">PROTOCOL</span>
-                    <b class="module-name">STATION POLICIES</b>
+                <a href="fleet.html" class="menu-module">
+                    <span class="module-id">LOGISTICS</span>
+                    <b class="module-name">ACTIVE FLEET</b>
                 </a>
                 
                 <a href="commander-login.html" class="menu-module" style="grid-column: 1 / -1; background: var(--fenz-red); border-color: var(--fenz-red);">
@@ -324,7 +250,7 @@
                     <a href="leadership.html">District Leadership</a>
                     <a href="ranks.html">Rank Structure & Duties</a>
                     <a href="roster.html">Operational Roster</a>
-                    <a href="policies.html">Operational Manual & Policies</a>
+                    <a href="fleet.html">Fleet Management</a>
                 </div>
             </div>
 
@@ -345,28 +271,8 @@
             </div>
         </div>
 
-        <div class="fleet-banner">
-            <h4 class="fleet-section-title">Christchurch District Fleet</h4>
-            <div class="fleet-grid">
-                
-                <div class="fleet-photo" style="background-image: url('https://raw.githubusercontent.com/marlin677/shitty/main/image%20(1).png');">
-                    <span class="fleet-tag">CHRI217 // SCANIA TYPE 3</span>
-                </div>
-                
-                <div class="fleet-photo" style="background-image: url('https://raw.githubusercontent.com/marlin677/shitty/main/image%20(2).png');">
-                    <span class="fleet-tag">AKLD111 // MAN TYPE 4</span>
-                </div>
-                
-                <div class="fleet-photo" style="background-image: url('https://raw.githubusercontent.com/marlin677/shitty/main/image%20(3).png');">
-                    <span class="fleet-tag">WRKW551 // IVECO technical</span>
-                </div>
-
-            </div>
-        </div>
-
         <div class="bottom-bar">
-            <span>&copy; Fire and Emergency New Zealand 2026 // Operational Portal</span>
-            <span>Internal Document 01-A</span>
+            <span>&copy; Fire and Emergency New Zealand // Operational Portal</span>
         </div>
     </footer>
 
