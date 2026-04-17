@@ -13,7 +13,7 @@
             --fenz-red: #d42027;
             --fenz-yellow: #ffed00;
             --dark-blue: #0b1120;
-            --glass: rgba(15, 23, 42, 0.85);
+            --glass: rgba(15, 23, 42, 0.9);
             --border: rgba(255, 255, 255, 0.1);
         }
 
@@ -28,7 +28,7 @@
             background-color: var(--dark-blue);
             color: white;
             background-image: 
-                linear-gradient(rgba(11, 17, 32, 0.9), rgba(11, 17, 32, 0.9)),
+                linear-gradient(rgba(11, 17, 32, 0.85), rgba(11, 17, 32, 0.85)),
                 url('https://www.fireandemergency.nz/assets/Uploads/FENZ-House_Burn_Levin-Hass_0084.jpg');
             background-attachment: fixed;
             background-size: cover;
@@ -38,89 +38,86 @@
         /* --- SEARCH HEADER --- */
         .search-vault {
             position: sticky; top: 0; z-index: 100;
-            background: rgba(8, 13, 26, 0.95);
-            backdrop-filter: blur(15px);
-            padding: 30px 5%;
-            border-bottom: 3px solid var(--fenz-red);
+            background: rgba(8, 13, 26, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 40px 5%;
+            border-bottom: 4px solid var(--fenz-red);
             display: flex; flex-direction: column; align-items: center;
         }
 
         .search-title {
-            font-size: 0.8rem; color: var(--fenz-yellow); letter-spacing: 5px; margin-bottom: 15px;
+            font-size: 0.9rem; color: var(--fenz-yellow); letter-spacing: 6px; margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 237, 0, 0.3);
         }
 
         #fleetSearch {
-            width: 100%; max-width: 800px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border);
-            padding: 20px 30px;
-            color: white; font-size: 1.2rem;
+            width: 100%; max-width: 900px;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid var(--border);
+            padding: 25px 35px;
+            color: white; font-size: 1.4rem;
             text-align: center;
-            letter-spacing: 2px;
-            transition: 0.3s;
+            letter-spacing: 3px;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         #fleetSearch:focus {
             outline: none; border-color: var(--fenz-red);
-            background: rgba(255,255,255,0.1);
-            box-shadow: 0 0 20px rgba(212, 32, 39, 0.4);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 0 30px rgba(212, 32, 39, 0.5);
         }
 
         /* --- GRID SYSTEM --- */
         .fleet-container {
-            max-width: 1400px; margin: 40px auto; padding: 0 20px;
+            max-width: 1600px; margin: 50px auto; padding: 0 30px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 25px;
         }
 
         .truck-card {
             background: var(--glass);
             border: 1px solid var(--border);
-            padding: 25px;
+            padding: 30px;
             position: relative;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            overflow: hidden;
+            transition: all 0.4s ease;
             display: flex; flex-direction: column;
+            border-bottom: 5px solid transparent;
         }
 
         .truck-card:hover {
             border-color: var(--fenz-yellow);
-            transform: scale(1.02);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-bottom: 5px solid var(--fenz-red);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         }
 
-        .truck-card::before {
-            content: ""; position: absolute; top: 0; left: 0;
-            width: 4px; height: 100%; background: var(--fenz-red);
-        }
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+        .tag-year { color: var(--fenz-yellow); font-size: 0.9rem; letter-spacing: 1px; }
+        .tag-id { font-size: 0.65rem; background: var(--fenz-red); padding: 4px 12px; letter-spacing: 1px; }
 
-        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
-        .tag-year { color: var(--fenz-yellow); font-size: 0.8rem; opacity: 0.8; }
-        .tag-id { font-size: 0.6rem; background: var(--fenz-red); padding: 2px 8px; }
+        .truck-name { font-size: 1.8rem; margin: 0; line-height: 1.1; letter-spacing: 1px; color: #fff; height: 3.6rem; display: flex; align-items: center; }
+        .truck-type { font-size: 0.95rem; color: #94a3b8; margin: 15px 0 25px 0; border-top: 1px solid var(--border); padding-top: 15px; }
 
-        .truck-name { font-size: 1.6rem; margin: 0; line-height: 1; letter-spacing: 1px; color: #fff; }
-        .truck-type { font-size: 0.9rem; color: #94a3b8; margin: 10px 0 20px 0; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-
-        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .spec-item { font-size: 0.7rem; color: #64748b; }
-        .spec-val { font-size: 0.75rem; color: #cbd5e1; display: block; margin-top: 2px; }
+        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: rgba(0,0,0,0.2); padding: 15px; }
+        .spec-item { font-size: 0.7rem; color: #64748b; font-weight: bold; }
+        .spec-val { font-size: 0.8rem; color: #e2e8f0; display: block; margin-top: 4px; }
 
         /* --- NO RESULTS --- */
         #noResults {
-            grid-column: 1 / -1; text-align: center; padding: 50px; display: none;
-            color: var(--fenz-red); font-size: 1.5rem;
+            grid-column: 1 / -1; text-align: center; padding: 100px; display: none;
+            color: var(--fenz-red); font-size: 2rem; letter-spacing: 5px;
         }
 
-        footer { text-align: center; padding: 40px; opacity: 0.3; font-size: 0.7rem; letter-spacing: 2px; }
+        footer { text-align: center; padding: 60px; opacity: 0.4; font-size: 0.8rem; letter-spacing: 3px; border-top: 1px solid var(--border); margin-top: 50px; }
 
     </style>
 </head>
 <body onselectstart="return false">
 
     <div class="search-vault">
-        <div class="search-title">CHRI-DISTRICT // LOGISTICS ENGINE</div>
-        <input type="text" id="fleetSearch" placeholder="SEARCH UNIT, MODEL, OR TYPE..." onkeyup="filterFleet()">
+        <div class="search-title">DISTRICT LOGISTICS // REAL-TIME FLEET INVENTORY</div>
+        <input type="text" id="fleetSearch" placeholder="TYPE UNIT NAME OR YEAR TO FILTER..." onkeyup="filterFleet()">
     </div>
 
     <div class="fleet-container" id="fleetGrid">
@@ -128,13 +125,13 @@
         <div class="truck-card" data-name="2017 MAN TGM 15.290 AERIAL">
             <div class="card-header">
                 <span class="tag-year">2017 MAN</span>
-                <span class="tag-id">HEAVY AERIAL</span>
+                <span class="tag-id">AERIAL</span>
             </div>
             <h2 class="truck-name">TGM 15.290</h2>
-            <div class="truck-type">Specialized Aerial Appliance</div>
+            <div class="truck-type">High-Reach Aerial Appliance</div>
             <div class="specs-grid">
-                <div class="spec-item">Status<span class="spec-val">Available</span></div>
-                <div class="spec-item">Capability<span class="spec-val">High-Reach Rescue</span></div>
+                <div class="spec-item">Unit Status<span class="spec-val">Operational</span></div>
+                <div class="spec-item">Class<span class="spec-val">Heavy Specialist</span></div>
             </div>
         </div>
 
@@ -146,60 +143,60 @@
             <h2 class="truck-name">124G SERIES</h2>
             <div class="truck-type">Pump Rescue Tender</div>
             <div class="specs-grid">
-                <div class="spec-item">Chassis<span class="spec-val">Heavy Duty</span></div>
-                <div class="spec-item">Primary Use<span class="spec-val">Fire & Rescue</span></div>
+                <div class="spec-item">Capability<span class="spec-val">Fire / Rescue</span></div>
+                <div class="spec-item">Weight Class<span class="spec-val">Heavy Duty</span></div>
             </div>
         </div>
 
-        <div class="truck-card" data-name="2005 MERCEDES 2633 ECONIC PUMP RESCUE TENDER">
+        <div class="truck-card" data-name="2005 MERCEDES 2633 ECONICPUMP">
             <div class="card-header">
                 <span class="tag-year">2005 MERCEDES</span>
-                <span class="tag-id">PRT</span>
+                <span class="tag-id">HEAVY PUMP</span>
             </div>
             <h2 class="truck-name">2633 ECONIC</h2>
-            <div class="truck-type">Low-Entry Pump Rescue</div>
+            <div class="truck-type">Low-Entry Urban Pump</div>
             <div class="specs-grid">
-                <div class="spec-item">Visibility<span class="spec-val">High-Vis Cab</span></div>
-                <div class="spec-item">District<span class="spec-val">Christchurch</span></div>
+                <div class="spec-item">Config<span class="spec-val">Econic Cab</span></div>
+                <div class="spec-item">Primary Role<span class="spec-val">Structural Fire</span></div>
             </div>
         </div>
 
         <div class="truck-card" data-name="IVECO EUROCARGO ML120-E25 EEV TANKER">
             <div class="card-header">
-                <span class="tag-year">IVECO</span>
-                <span class="tag-id">LOGISTICS</span>
+                <span class="tag-year">IVECO LOGISTICS</span>
+                <span class="tag-id">TANKER</span>
             </div>
-            <h2 class="truck-name">EUROCARGO ML120</h2>
-            <div class="truck-type">EEV Operational Tanker</div>
+            <h2 class="truck-name">EUROCARGO ML120-E25</h2>
+            <div class="truck-type">EEV Specialist Tanker</div>
             <div class="specs-grid">
-                <div class="spec-item">Capacity<span class="spec-val">High-Volume Water</span></div>
                 <div class="spec-item">Emissions<span class="spec-val">EEV Standard</span></div>
+                <div class="spec-item">Utility<span class="spec-val">Water Logistics</span></div>
             </div>
         </div>
 
-        <div class="truck-card" data-name="2012 HINO 500 MISC">
+        <div class="truck-card" data-name="2012 HINO 500MISC">
             <div class="card-header">
                 <span class="tag-year">2012 HINO</span>
-                <span class="tag-id">SUPPORT</span>
+                <span class="tag-id">MISC</span>
             </div>
             <h2 class="truck-name">500 SERIES</h2>
-            <div class="truck-type">Miscellaneous Operations</div>
+            <div class="truck-type">Miscellaneous Operations Unit</div>
             <div class="specs-grid">
-                <div class="spec-item">Utility<span class="spec-val">Multi-Role</span></div>
-                <div class="spec-item">Deployment<span class="spec-val">Logistics</span></div>
+                <div class="spec-item">Role<span class="spec-val">General Logistics</span></div>
+                <div class="spec-item">Unit ID<span class="spec-val">HINO-500-M</span></div>
             </div>
         </div>
 
         <div class="truck-card" data-name="2021 TOYOTA HILUX SMOKECHASER">
             <div class="card-header">
                 <span class="tag-year">2021 TOYOTA</span>
-                <span class="tag-id">LIGHT ATTACK</span>
+                <span class="tag-id">QUICK ATTACK</span>
             </div>
             <h2 class="truck-name">HILUX</h2>
-            <div class="truck-type">Smokechaser Unit</div>
+            <div class="truck-type">Smokechaser Wildfire Unit</div>
             <div class="specs-grid">
-                <div class="spec-item">Off-Road<span class="spec-val">4x4 Specialist</span></div>
-                <div class="spec-item">Speed<span class="spec-val">Rapid Response</span></div>
+                <div class="spec-item">Drive<span class="spec-val">4x4 All-Terrain</span></div>
+                <div class="spec-item">Response<span class="spec-val">Rapid Deployment</span></div>
             </div>
         </div>
 
@@ -209,23 +206,23 @@
                 <span class="tag-id">RURAL</span>
             </div>
             <h2 class="truck-name">ELF</h2>
-            <div class="truck-type">Rural Pump Appliance</div>
+            <div class="truck-type">Rural Interface Pump</div>
             <div class="specs-grid">
-                <div class="spec-item">Terrain<span class="spec-val">Rural/Urban</span></div>
-                <div class="spec-item">Pump<span class="spec-val">Integrated System</span></div>
+                <div class="spec-item">Pump Type<span class="spec-val">Rural Standard</span></div>
+                <div class="spec-item">Environment<span class="spec-val">Vegetation/Rural</span></div>
             </div>
         </div>
 
-        <div class="truck-card" data-name="2006 TOYOTA HIACE PERSONNEL">
+        <div class="truck-card" data-name="2006 TOYOTA HIACE">
             <div class="card-header">
                 <span class="tag-year">2006 TOYOTA</span>
                 <span class="tag-id">TRANSPORT</span>
             </div>
-            <h2 class="truck-name">HIACE</h2>
-            <div class="truck-type">Personnel Transport</div>
+            <h2 class="truck-name">HIACE VAN</h2>
+            <div class="truck-type">Personnel Transport / Support</div>
             <div class="specs-grid">
-                <div class="spec-item">Seating<span class="spec-val">Crew Support</span></div>
-                <div class="spec-item">Role<span class="spec-val">Logistics Support</span></div>
+                <div class="spec-item">Capacity<span class="spec-val">Crew Transfer</span></div>
+                <div class="spec-item">Service<span class="spec-val">Support Division</span></div>
             </div>
         </div>
 
@@ -235,31 +232,30 @@
                 <span class="tag-id">COMMAND</span>
             </div>
             <h2 class="truck-name">LF55</h2>
-            <div class="truck-type">Mobile Command Unit</div>
+            <div class="truck-type">District Command Unit</div>
             <div class="specs-grid">
-                <div class="spec-item">Tech<span class="spec-val">Field Comms</span></div>
-                <div class="spec-item">Control<span class="spec-val">Incident Command</span></div>
+                <div class="spec-item">Field Comms<span class="spec-val">Full Suite</span></div>
+                <div class="spec-item">Authority<span class="spec-val">Incident Command</span></div>
             </div>
         </div>
 
-        <div id="noResults">NO UNITS MATCHING YOUR SEARCH CRITERIA</div>
+        <div id="noResults">DATABASE ERROR: NO UNITS FOUND</div>
     </div>
 
     <footer>
-        &copy; FIRE AND EMERGENCY NEW ZEALAND // CHRISTCHURCH FLEET MANAGEMENT SYSTEM // 2026
+        &copy; FIRE AND EMERGENCY NEW ZEALAND // CHRISTCHURCH FLEET LOGISTICS // INTERNAL ACCESS ONLY
     </footer>
 
     <script>
         function filterFleet() {
             let input = document.getElementById('fleetSearch').value.toUpperCase();
             let cards = document.getElementsByClassName('truck-card');
-            let grid = document.getElementById('fleetGrid');
             let noRes = document.getElementById('noResults');
             let visibleCount = 0;
 
             for (let i = 0; i < cards.length; i++) {
                 let name = cards[i].getAttribute('data-name').toUpperCase();
-                if (name.includes(input)) {
+                if (name.indexOf(input) > -1) {
                     cards[i].style.display = "";
                     visibleCount++;
                 } else {
@@ -270,7 +266,7 @@
             noRes.style.display = (visibleCount === 0) ? "block" : "none";
         }
 
-        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('contextmenu', e => e.preventDefault());
     </script>
 </body>
 </html>
