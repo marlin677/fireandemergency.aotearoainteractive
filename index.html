@@ -19,7 +19,6 @@
             --discord-blurple: #5865F2;
         }
 
-        /* Applying the requested font globally */
         * {
             box-sizing: border-box;
             font-family: 'Industry-BoldItalic', sans-serif !important;
@@ -35,7 +34,6 @@
             background-image: radial-gradient(circle at 50% 50%, #111a2e 0%, #0b1120 100%);
         }
 
-        /* Copyright Watermark */
         body::after {
             content: "Developed by Marlin_Mayhem | Copyrighted to Aotearoa Interactive";
             position: fixed; bottom: 10px; right: 15px; opacity: 0.15;
@@ -43,7 +41,6 @@
             pointer-events: none; z-index: 9999;
         }
 
-        /* --- HEADER --- */
         .header-main {
             display: flex;
             justify-content: space-between;
@@ -58,7 +55,6 @@
         .logo img { height: 60px; }
         .emergency-number { font-size: 2.2rem; color: white; font-weight: 900; line-height: 1; }
 
-        /* --- HERO & OPERATIONAL LANDING --- */
         .hero {
             height: 90vh;
             display: flex;
@@ -86,7 +82,6 @@
             text-shadow: 4px 4px 0px var(--fenz-red);
         }
 
-        /* --- COMMAND MODULE MENU --- */
         .command-menu {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -120,14 +115,11 @@
             transition: 0.3s;
         }
 
-        .menu-module:hover::after {
-            background: var(--fenz-yellow);
-        }
+        .menu-module:hover::after { background: var(--fenz-yellow); }
 
         .module-id { color: var(--fenz-yellow); font-size: 0.7rem; opacity: 0.8; letter-spacing: 2px; }
         .module-name { font-size: 1.3rem; margin-top: 5px; font-weight: bold; }
 
-        /* --- DISCORD CONNECT --- */
         .discord-btn {
             grid-column: 1 / -1;
             background: var(--discord-blurple);
@@ -141,7 +133,6 @@
         }
         .discord-btn:hover { background: #4752c4; transform: scale(1.02); }
 
-        /* --- REDESIGNED FOOTER SYSTEM --- */
         footer {
             background-color: #080d1a;
             padding: 80px 5% 40px 5%;
@@ -180,7 +171,6 @@
             padding-left: 10px;
         }
 
-        /* --- BOTTOM BAR --- */
         .bottom-bar {
             max-width: 1600px;
             margin: 60px auto 0 auto;
@@ -191,7 +181,6 @@
             color: #475569;
             font-size: 0.8rem;
         }
-
     </style>
 </head>
 <body onselectstart="return false">
@@ -200,7 +189,6 @@
         <div class="logo">
             <img src="https://raw.githubusercontent.com/marlin677/marlin77.github.io/main/FIRE%20AND%20EMERGENCY%20LOGO%201.png" alt="FENZ">
         </div>
-
         <div class="emergency-contact" style="text-align: right;">
             <div class="emergency-label" style="color: var(--fenz-yellow); font-size: 0.8rem; letter-spacing: 2px;">In Emergencies</div>
             <div class="emergency-number">Call 111</div>
@@ -227,9 +215,14 @@
                     <span class="module-id">PERSONNEL</span>
                     <b class="module-name">NATIONAL ROSTER</b>
                 </a>
-                <a href="fleet.html" class="menu-module">
+                <a href="policies.html" class="menu-module">
+                    <span class="module-id">PROTOCOL</span>
+                    <b class="module-name">STATION POLICIES</b>
+                </a>
+                
+                <a href="fleet.html" class="menu-module" style="grid-column: 1 / -1; border-color: var(--fenz-yellow);">
                     <span class="module-id">LOGISTICS</span>
-                    <b class="module-name">ACTIVE FLEET</b>
+                    <b class="module-name">ACTIVE FLEET DATABASE</b>
                 </a>
                 
                 <a href="commander-login.html" class="menu-module" style="grid-column: 1 / -1; background: var(--fenz-red); border-color: var(--fenz-red);">
@@ -248,8 +241,9 @@
                 <h3>Portal Navigation</h3>
                 <div class="footer-links">
                     <a href="leadership.html">District Leadership</a>
-                    <a href="ranks.html">Rank Structure & Duties</a>
+                    <a href="ranks.html">Rank Structure</a>
                     <a href="roster.html">Operational Roster</a>
+                    <a href="policies.html">Station Policies</a>
                     <a href="fleet.html">Fleet Management</a>
                 </div>
             </div>
@@ -258,7 +252,7 @@
                 <h3>Contact Admin</h3>
                 <div class="footer-links">
                     <p style="color: white; margin-bottom: 5px;">Server & Portal Inquiries:</p>
-                    <a href="mailto:skyrimprime77@gmail.com" style="text-transform: none; color: var(--fenz-yellow);">skyrimprime77@gmail.com</a>
+                    <a href="mailto:skyrimprime77@gmail.com" style="color: var(--fenz-yellow);">skyrimprime77@gmail.com</a>
                 </div>
             </div>
 
@@ -277,14 +271,9 @@
     </footer>
 
     <script>
-        // Disable Right-Click
         document.addEventListener('contextmenu', event => event.preventDefault());
-
-        // Disable F12, Ctrl+Shift+I, Ctrl+U
         document.onkeydown = function(e) {
-            if (e.keyCode == 123 || 
-                (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) || 
-                (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
+            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
                 return false;
             }
         };
