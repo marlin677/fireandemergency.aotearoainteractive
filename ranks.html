@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rank Structure | FENZ Portal</title>
+    <title>Internal Roster | FENZ Portal</title>
     
     <link href="https://db.onlinewebfonts.com/c/30c7488235dccc1b4f5dd8ad33a47ddb?family=Industry-BoldItalic" rel="stylesheet">
 
@@ -12,8 +12,8 @@
             --fenz-red: #d42027;
             --fenz-yellow: #ffed00;
             --dark-blue: #0b1120;
-            --card-bg: #162036;
-            --border-color: #2d3a54;
+            --card-bg: rgba(15, 23, 42, 0.9);
+            --border-color: rgba(255, 255, 255, 0.1);
             --command-gold: #c5a059;
         }
 
@@ -24,174 +24,122 @@
         }
 
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             background-color: var(--dark-blue);
-            color: #e2e8f0;
+            color: white;
             background-image: radial-gradient(circle at 50% 50%, #111a2e 0%, #0b1120 100%);
             min-height: 100vh;
         }
 
-        /* Top Navigation Bar */
+        /* --- STICKY HEADER & SEARCH --- */
         .top-nav {
-            background: rgba(8, 13, 26, 0.95);
-            padding: 20px 5%;
-            border-bottom: 3px solid var(--fenz-red);
+            background: rgba(8, 13, 26, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 30px 5%;
+            border-bottom: 4px solid var(--fenz-red);
+            position: sticky; top: 0; z-index: 1000;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        .nav-text { text-align: center; margin-bottom: 15px; }
+        .secure-link { color: var(--fenz-yellow); font-size: 0.8rem; letter-spacing: 3px; }
+
+        #rankSearch {
+            width: 100%; max-width: 900px;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid var(--border-color);
+            padding: 20px 30px;
+            color: white; font-size: 1.3rem;
+            text-align: center;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        #rankSearch:focus {
+            outline: none; border-color: var(--fenz-red);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 0 20px rgba(212, 32, 39, 0.4);
+        }
+
+        /* --- CONTENT CONTAINER --- */
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 5%;
+            display: flex; flex-direction: column; gap: 20px;
+        }
+
+        /* --- RANK CARD (Inspired by your image) --- */
+        .rank-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            padding: 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-        }
-
-        .logo-section { display: flex; align-items: center; gap: 15px; }
-        .logo-section img { height: 50px; }
-        .doc-id { color: var(--fenz-yellow); font-size: 0.8rem; letter-spacing: 2px; }
-
-        /* Content Container */
-        .container {
-            max-width: 1400px;
-            margin: 40px auto;
-            padding: 0 5%;
-        }
-
-        .page-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .page-title h1 {
-            font-size: 4rem;
-            margin: 0;
-            color: white;
-            text-shadow: 0 0 20px rgba(212, 32, 39, 0.2);
-        }
-
-        .page-title p {
-            color: var(--fenz-yellow);
-            letter-spacing: 4px;
-            font-size: 1.1rem;
-        }
-
-        /* Section Headers */
-        .section-header {
-            grid-column: 1 / -1;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin: 40px 0 20px 0;
-        }
-
-        .section-header h2 {
-            font-size: 1.8rem;
-            color: white;
-            white-space: nowrap;
-        }
-
-        .section-header .line {
-            height: 2px;
-            background: linear-gradient(90deg, var(--fenz-red), transparent);
-            width: 100%;
-        }
-
-        /* Rank Grid */
-        .rank-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 20px;
-        }
-
-        /* Rank Cards */
-        .rank-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 30px;
             position: relative;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            overflow: hidden;
-        }
-
-        .rank-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 4px; height: 100%;
-            background: var(--fenz-red);
-            transition: 0.3s;
+            transition: 0.3s ease;
+            cursor: default;
         }
 
         .rank-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            background: #1c2a47;
             border-color: var(--fenz-yellow);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: translateY(-5px);
         }
 
-        .rank-card:hover::before {
-            width: 8px;
-            background: var(--fenz-yellow);
+        /* Red strip on hover */
+        .rank-card::before {
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 5px; height: 100%; background: var(--fenz-red);
+            opacity: 0; transition: 0.3s;
         }
 
-        .rank-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
+        .rank-card:hover::before { opacity: 1; }
+
+        /* Left Side: Info */
+        .card-info { flex: 1; padding-right: 40px; }
+        
+        .rank-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+        .rank-title { font-size: 1.6rem; color: white; margin: 0; }
+        .officer-tag { font-size: 0.6rem; background: var(--fenz-red); padding: 4px 10px; color: white; letter-spacing: 1px; }
+        .command-tag { font-size: 0.6rem; background: var(--command-gold); padding: 4px 10px; color: black; letter-spacing: 1px; }
+
+        .rank-desc { font-size: 0.9rem; color: #94a3b8; line-height: 1.6; text-transform: none; max-width: 800px; }
+
+        /* Helm Info (Accurate) */
+        .helmet-id { margin-top: 15px; font-size: 0.8rem; color: var(--fenz-yellow); display: flex; align-items: center; gap: 8px; }
+        .helmet-id::before { content: '●'; color: var(--fenz-red); }
+
+        /* Right Side: Image/Markings */
+        .card-marking {
+            width: 120px; height: 150px;
+            border: 2px solid rgba(255,255,255,0.05);
+            background-color: #000;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
         }
 
-        .rank-name {
-            font-size: 1.4rem;
-            color: white;
-            max-width: 70%;
+        .marking-label {
+            position: absolute; bottom: -20px; right: 0;
+            font-size: 0.6rem; color: #64748b;
         }
 
-        .officer-tag {
-            background: var(--fenz-red);
-            color: white;
-            font-size: 0.75rem;
-            padding: 5px 12px;
-            border-radius: 2px;
-            box-shadow: 0 4px 10px rgba(212, 32, 39, 0.3);
-        }
-
-        .rank-desc {
-            font-size: 0.9rem;
-            color: #94a3b8;
-            line-height: 1.6;
-            text-transform: none; /* Description remains readable */
-        }
-
-        /* Rank Markers (Helmet Info) */
-        .helmet-id {
-            margin-top: 15px;
-            font-size: 0.8rem;
-            color: var(--fenz-yellow);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .helmet-id::before {
-            content: '●';
-            color: var(--fenz-red);
+        /* --- NO RESULTS --- */
+        #noResults {
+            text-align: center; padding: 100px; display: none;
+            color: var(--fenz-red); font-size: 1.8rem; letter-spacing: 4px;
         }
 
         /* Footer Button */
-        .footer-nav {
-            text-align: center;
-            padding: 80px 0;
-        }
-
         .back-btn {
-            color: white;
-            text-decoration: none;
-            padding: 15px 40px;
-            border: 2px solid var(--fenz-red);
-            font-weight: bold;
-            transition: 0.3s;
-            background: transparent;
+            display: inline-block;
+            margin: 60px 0;
+            color: white; text-decoration: none;
+            padding: 18px 50px; border: 2px solid var(--fenz-red);
+            font-weight: bold; transition: 0.3s; background: transparent;
         }
 
         .back-btn:hover {
@@ -199,126 +147,152 @@
             box-shadow: 0 0 20px rgba(212, 32, 39, 0.4);
         }
 
+        footer { text-align: center; padding: 40px; opacity: 0.3; font-size: 0.7rem; letter-spacing: 2px; }
+
     </style>
 </head>
-<body>
+<body onselectstart="return false">
 
     <nav class="top-nav">
-        <div class="logo-section">
-            <img src="https://raw.githubusercontent.com/marlin677/marlin77.github.io/main/FIRE%20AND%20EMERGENCY%20LOGO%201.png" alt="FENZ Logo">
-            <span class="doc-id">INTERNAL OPS // ARCHIVE 04-A</span>
+        <div class="nav-text">
+            <img src="https://raw.githubusercontent.com/marlin677/marlin77.github.io/main/FIRE%20AND%20EMERGENCY%20LOGO%201.png" style="height: 40px; margin-bottom: 10px;">
+            <div class="secure-link">INTERNAL OPS // ARCHIVE 04-A // RANK STRUCTURE</div>
         </div>
-        <a href="index.html" style="color: var(--fenz-yellow); text-decoration: none; font-size: 0.8rem;">SECURE PORTAL ACCESS</a>
+        <input type="text" id="rankSearch" placeholder="SEARCH RANK TITLE (e.g., Area Commander)" onkeyup="filterRoster()">
     </nav>
 
-    <div class="container">
+    <div class="container" id="rosterGrid">
         
-        <div class="page-title">
-            <p>FIRE AND EMERGENCY NEW ZEALAND</p>
-            <h1>RANK STRUCTURE</h1>
-        </div>
-
-        <div class="section-header">
-            <h2>STRATEGIC LEADERSHIP</h2>
-            <div class="line"></div>
-        </div>
-
-        <div class="rank-grid">
-            <div class="rank-card">
+        <div class="rank-card" data-title="Assistant National Commander (NHQ)">
+            <div class="card-info">
                 <div class="rank-header">
-                    <span class="rank-name">National Fire Commander</span>
-                    <span class="officer-tag" style="background: #000;">NHQ</span>
+                    <h2 class="rank-title">Assistant National Commander (NHQ)</h2>
+                    <span class="command-tag">NHQ Strategic Command</span>
                 </div>
-                <p class="rank-desc">The ultimate authority for FENZ. Responsible for national policy, legislative compliance, and the overall strategic direction of the organization.</p>
-                <div class="helmet-id">HELMET: SILVER / NATIONAL INSIGNIA</div>
+                <p class="rank-desc">National-level strategic lead responsible for NHQ functions, national response coordination, and organizational capability. Represents FENZ on executive-level government committees.</p>
+                <div class="helmet-id">MARKING: NHQ NATIONAL INSIGNIA // COMMS SUITE</div>
             </div>
-
-            <div class="rank-card">
-                <div class="rank-header">
-                    <span class="rank-name">District Manager</span>
-                    <span class="officer-tag">Ben Lewis</span>
-                </div>
-                <p class="rank-desc">Strategic lead for the Christchurch District. Manages regional budgets, long-term planning, and inter-agency relations with Police and St John.</p>
-                <div class="helmet-id">HELMET: BLACK / SILVER BAND</div>
-            </div>
-
-            <div class="rank-card">
-                <div class="rank-header">
-                    <span class="rank-name">Group Manager</span>
-                    <span class="officer-tag">Ethan Brown</span>
-                </div>
-                <p class="rank-desc">Operational oversight of multiple station groups. Bridges the gap between frontline station officers and district management.</p>
-                <div class="helmet-id">HELMET: BLACK / TWO BLUE BANDS</div>
+            <div class="card-marking" style="background-image: url('https://github.com/marlin677/monkeynigga1/blob/main/ASSISTANTNATIONALCOMMANDER.png?raw=true');">
+                <span class="marking-label">ANC NHQ</span>
             </div>
         </div>
 
-        <div class="section-header">
-            <h2>STATION LEADERSHIP</h2>
-            <div class="line"></div>
-        </div>
-
-        <div class="rank-grid">
-            <div class="rank-card">
+        <div class="rank-card" data-title="Area Commander (Christchurch)">
+            <div class="card-info">
                 <div class="rank-header">
-                    <span class="rank-name">Senior Station Officer (SSO)</span>
+                    <h2 class="rank-title">Area Commander (Christchurch Area)</h2>
+                    <span class="command-tag">Area Leadership</span>
                 </div>
-                <p class="rank-desc">The high-ranking officer on shift. Responsible for station management and acts as Incident Controller at significant emergencies.</p>
-                <div class="helmet-id">HELMET: RED / TWO WHITE BANDS</div>
+                <p class="rank-desc">Manages all operations, resources, and personnel within the Christchurch area. Handles inter-agency coordination (Police, St John) for Area incidents.</p>
+                <div class="helmet-id">MARKING: SILVER BAND // AREA OPS COMMS</div>
             </div>
-
-            <div class="rank-card">
-                <div class="rank-header">
-                    <span class="rank-name">Station Officer (SO)</span>
-                </div>
-                <p class="rank-desc">Commands a single appliance (e.g., CHRI217). Leads the crew in tactical deployment and ensures personnel safety on the fireground.</p>
-                <div class="helmet-id">HELMET: RED / ONE WHITE BAND</div>
+            <div class="card-marking" style="background-image: url('https://github.com/marlin677/monkeynigga1/blob/main/COMCENOPERATIONSMGR.png?raw=true');">
+                <span class="marking-label">AC CHRI</span>
             </div>
         </div>
 
-        <div class="section-header">
-            <h2>FRONTLINE PERSONNEL</h2>
-            <div class="line"></div>
-        </div>
-
-        <div class="rank-grid">
-            <div class="rank-card">
+        <div class="rank-card" data-title="District Manager (Ben Lewis)">
+            <div class="card-info">
                 <div class="rank-header">
-                    <span class="rank-name">Senior Firefighter</span>
+                    <h2 class="rank-title">District Manager (Ben Lewis)</h2>
+                    <span class="command-tag">Strategic Lead</span>
                 </div>
-                <p class="rank-desc">A veteran firefighter with advanced technical skills. Often acts as a mentor and takes lead on complex rescue tasks.</p>
-                <div class="helmet-id">HELMET: YELLOW / TWO BLUE BARS</div>
+                <p class="rank-desc">Strategic oversight of the Christchurch District. Manages regional budgets, long-term planning, and coordinates with local government and community leaders.</p>
+                <div class="helmet-id">MARKING: BLACK HELMET // DISTRICT INSIGNIA</div>
             </div>
-
-            <div class="rank-card">
-                <div class="rank-header">
-                    <span class="rank-name">Qualified Firefighter</span>
-                </div>
-                <p class="rank-desc">Completed all core training modules. Fully authorized for interior structural fire attack and advanced equipment operation.</p>
-                <div class="helmet-id">HELMET: YELLOW / ONE BLUE BAR</div>
-            </div>
-
-            <div class="rank-card">
-                <div class="rank-header">
-                    <span class="rank-name">Firefighter</span>
-                </div>
-                <p class="rank-desc">Frontline responder currently working through competency levels. Operates under the direct supervision of an Officer.</p>
-                <div class="helmet-id">HELMET: YELLOW / NO BARS</div>
-            </div>
-
-            <div class="rank-card">
-                <div class="rank-header">
-                    <span class="rank-name">Recruit Firefighter</span>
-                </div>
-                <p class="rank-desc">Newest members of the service. Focused on basic skills, station duties, and supporting the experienced crew.</p>
-                <div class="helmet-id">HELMET: NEON ORANGE</div>
+            <div class="card-marking" style="background-image: url('https://github.com/marlin677/monkeynigga1/blob/main/COMMANDER.png?raw=true');">
+                <span class="marking-label">DM CHRI</span>
             </div>
         </div>
 
+        <div class="rank-card" data-title="Senior Station Officer (SSO)">
+            <div class="card-info">
+                <div class="rank-header">
+                    <h2 class="rank-title">Senior Station Officer (SSO)</h2>
+                    <span class="officer-tag">Officer</span>
+                </div>
+                <p class="rank-desc">Commands the Station (Shift). Manages personnel, roster compliance, and serves as Incident Controller at major emergencies until relieved by higher command.</p>
+                <div class="helmet-id">HELMET: RED // TWO WHITE BANDS</div>
+            </div>
+            <div class="card-marking" style="background-image: url('https://github.com/marlin677/monkeynigga1/blob/main/SSO.png?raw=true');">
+                <span class="marking-label">SSO INSIGNIA</span>
+            </div>
+        </div>
+
+        <div class="rank-card" data-title="Station Officer (SO)">
+            <div class="card-info">
+                <div class="rank-header">
+                    <h2 class="rank-title">Station Officer (SO)</h2>
+                    <span class="officer-tag">Tactical Officer</span>
+                </div>
+                <p class="rank-desc">Commands a single appliance (e.g., CHRI217). Tactically deploys the crew and is responsible for their direct safety and coordination on the fireground.</p>
+                <div class="helmet-id">HELMET: RED // ONE WHITE BAND</div>
+            </div>
+            <div class="card-marking" style="background-color: #d42027; background-image: url('https://github.com/marlin677/marlin77.github.io/main/FIRE%20AND%20EMERGENCY%20LOGO%201.png'); background-size: 60px;">
+                <span class="marking-label">SO // Tactical Red</span>
+            </div>
+        </div>
+
+        <div class="rank-card" data-title="Senior Firefighter (SFF)">
+            <div class="card-info">
+                <div class="rank-header">
+                    <h2 class="rank-title">Senior Firefighter (SFF)</h2>
+                </div>
+                <p class="rank-desc">Veteran frontline member with advanced technical skills. Acts as a key operational mentor and takes lead on complex rescue tasks and technical equipment.</p>
+                <div class="helmet-id">HELMET: YELLOW // PURE YELLOW OPS</div>
+            </div>
+            <div class="card-marking" style="background-color: #ffed00;">
+                <span class="marking-label">SFF // Yellow</span>
+            </div>
+        </div>
+
+        <div class="rank-card" data-title="Qualified Firefighter (QFF)">
+            <div class="card-info">
+                <div class="rank-header">
+                    <h2 class="rank-title">Qualified Firefighter (QFF)</h2>
+                </div>
+                <p class="rank-desc">Fully trained core responder. Completed advanced competency modules and is qualified for internal structural firefighting and rescue operations.</p>
+                <div class="helmet-id">HELMET: YELLOW // PURE YELLOW OPS</div>
+            </div>
+            <div class="card-marking" style="background-color: #ffed00;">
+                <span class="marking-label">QFF // Yellow</span>
+            </div>
+        </div>
+
+        <div id="noResults">DATABASE ERROR: NO RANKS FOUND</div>
+        
     </div>
 
-    <div class="footer-nav">
+    <center>
         <a href="index.html" class="back-btn">RETURN TO COMMAND PORTAL</a>
-    </div>
+    </center>
 
+    <footer>
+        &copy; FIRE AND EMERGENCY NEW ZEALAND 2026 // INTERNAL RANK DATABASE // CHRISTCHURCH AREA
+    </footer>
+
+    <script>
+        function filterRoster() {
+            let input = document.getElementById('rankSearch').value.toUpperCase();
+            let cards = document.getElementsByClassName('rank-card');
+            let noRes = document.getElementById('noResults');
+            let visibleCount = 0;
+
+            for (let i = 0; i < cards.length; i++) {
+                let title = cards[i].getAttribute('data-title').toUpperCase();
+                if (title.includes(input)) {
+                    cards[i].style.display = "";
+                    visibleCount++;
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+
+            noRes.style.display = (visibleCount === 0) ? "block" : "none";
+        }
+
+        // Disable Right-Click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+    </script>
 </body>
 </html>
