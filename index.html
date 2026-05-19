@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Internal Portal | FENZ Christchurch</title>
+    <title>Operations Ceased | FENZ Christchurch</title>
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/marlin677/marlin77.github.io/main/FIRE%20AND%20EMERGENCY%20LOGO%201.png">
     
     <link href="https://db.onlinewebfonts.com/c/30c7488235dccc1b4f5dd8ad33a47ddb?family=Industry-BoldItalic" rel="stylesheet">
@@ -16,7 +16,6 @@
             --card-bg: rgba(30, 41, 59, 0.7);
             --border-color: rgba(255, 255, 255, 0.1);
             --accent-glow: rgba(212, 32, 39, 0.5);
-            --discord-blurple: #5865F2;
         }
 
         * {
@@ -56,86 +55,71 @@
         .emergency-number { font-size: 2.2rem; color: white; font-weight: 900; line-height: 1; }
 
         .hero {
-            height: 90vh;
+            min-height: 85vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(rgba(11, 17, 32, 0.7), rgba(11, 17, 32, 0.7)),
+            background: linear-gradient(rgba(11, 17, 32, 0.85), rgba(11, 17, 32, 0.85)),
                         url('https://www.fireandemergency.nz/assets/Uploads/FENZ-House_Burn_Levin-Hass_0084.jpg');
             background-size: cover;
             background-position: center;
             border-bottom: 10px solid var(--fenz-red);
+            padding: 40px 0;
         }
 
         .landing-container {
             width: 90%;
-            max-width: 1600px;
+            max-width: 1200px;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
+            text-align: center;
+            gap: 30px;
         }
 
         .hero-title h1 {
-            font-size: 5.5rem;
-            line-height: 0.85;
+            font-size: 4.5rem;
+            line-height: 0.9;
             margin: 0;
             text-shadow: 4px 4px 0px var(--fenz-red);
         }
 
-        .command-menu {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            max-width: 600px;
-        }
-
-        .menu-module {
-            text-decoration: none;
-            color: white;
+        .closure-notice {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 25px;
-            text-align: center;
+            border: 2px solid var(--fenz-red);
+            box-shadow: 0 0 30px var(--accent-glow);
+            padding: 40px;
+            max-width: 650px;
+            width: 100%;
             position: relative;
-            overflow: hidden;
-            transition: 0.3s;
         }
 
-        .menu-module:hover {
-            border-color: var(--fenz-yellow);
-            box-shadow: 0 0 20px var(--accent-glow);
-            transform: scale(1.03);
-        }
-
-        .menu-module::after {
+        .closure-notice::after {
             content: '';
             position: absolute; bottom: 0; left: 0;
-            width: 100%; height: 3px;
+            width: 100%; height: 5px;
             background: var(--fenz-red);
-            transition: 0.3s;
         }
 
-        .menu-module:hover::after { background: var(--fenz-yellow); }
-
-        .module-id { color: var(--fenz-yellow); font-size: 0.7rem; opacity: 0.8; letter-spacing: 2px; }
-        .module-name { font-size: 1.3rem; margin-top: 5px; font-weight: bold; }
-
-        .discord-btn {
-            grid-column: 1 / -1;
-            background: var(--discord-blurple);
-            border: 1px solid var(--discord-blurple);
-            color: white;
-            text-decoration: none;
-            padding: 15px;
-            font-size: 1rem;
-            text-align: center;
-            transition: 0.3s;
+        .notice-status {
+            color: var(--fenz-yellow);
+            font-size: 1.5rem;
+            letter-spacing: 3px;
+            font-weight: bold;
+            margin-bottom: 15px;
         }
-        .discord-btn:hover { background: #4752c4; transform: scale(1.02); }
+
+        .notice-message {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            letter-spacing: 1px;
+            color: #e2e8f0;
+            text-transform: none; /* Allows natural readability for the explanatory text */
+        }
 
         footer {
             background-color: #080d1a;
-            padding: 80px 5% 40px 5%;
+            padding: 60px 5% 40px 5%;
             border-top: 2px solid var(--border-color);
         }
 
@@ -143,7 +127,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 40px;
-            max-width: 1600px;
+            max-width: 1200px;
             margin: auto;
         }
 
@@ -172,8 +156,8 @@
         }
 
         .bottom-bar {
-            max-width: 1600px;
-            margin: 60px auto 0 auto;
+            max-width: 1200px;
+            margin: 40px auto 0 auto;
             border-top: 1px solid var(--border-color);
             padding-top: 30px;
             display: flex;
@@ -181,9 +165,14 @@
             color: #475569;
             font-size: 0.8rem;
         }
+
+        @media (max-width: 768px) {
+            .hero-title h1 { font-size: 3rem; }
+            .closure-notice { padding: 25px; }
+        }
     </style>
 </head>
-<body onselectstart="return false">
+<body>
 
     <header class="header-main">
         <div class="logo">
@@ -202,81 +191,39 @@
                 <h1>WHAKARATONGA<br>IWI<br>MATAARA.</h1>
             </div>
 
-            <nav class="command-menu">
-                <a href="leadership.html" class="menu-module">
-                    <span class="module-id">COMMAND</span>
-                    <b class="module-name">DISTRICT LEADERSHIP</b>
-                </a>
-                <a href="ranks.html" class="menu-module">
-                    <span class="module-id">STRUCTURE</span>
-                    <b class="module-name">DEPARTMENT RANKS</b>
-                </a>
-                <a href="roster.html" class="menu-module">
-                    <span class="module-id">PERSONNEL</span>
-                    <b class="module-name">NATIONAL ROSTER</b>
-                </a>
-                <a href="policies.html" class="menu-module">
-                    <span class="module-id">PROTOCOL</span>
-                    <b class="module-name">STATION POLICIES</b>
-                </a>
-                
-                <a href="fleet.html" class="menu-module" style="grid-column: 1 / -1; border-color: var(--fenz-yellow);">
-                    <span class="module-id">LOGISTICS</span>
-                    <b class="module-name">ACTIVE FLEET DATABASE</b>
-                </a>
-                
-                <a href="commander-login.html" class="menu-module" style="grid-column: 1 / -1; background: var(--fenz-red); border-color: var(--fenz-red);">
-                    <span class="module-id" style="color: white;">RESTRICTED</span>
-                    <b class="module-name" style="color: var(--fenz-yellow);">Leadership Login</b>
-                </a>
-                
-                <a href="https://discord.gg/JCKE2StE" target="_blank" class="discord-btn">JOIN OPERATIONAL DISCORD</a>
-            </nav>
+            <div class="closure-notice">
+                <div class="notice-status">⚠️ OPERATIONS CEASED ⚠️</div>
+                <div class="notice-message">
+                    This portal and its associated district operations have officially been decommissioned. 
+                    We thank all personnel, active responders, and leadership units for their dedicated service.
+                </div>
+            </div>
         </div>
     </section>
 
     <footer>
         <div class="footer-nav">
             <div class="footer-group">
-                <h3>Portal Navigation</h3>
-                <div class="footer-links">
-                    <a href="leadership.html">District Leadership</a>
-                    <a href="ranks.html">Rank Structure</a>
-                    <a href="roster.html">Operational Roster</a>
-                    <a href="policies.html">Station Policies</a>
-                    <a href="fleet.html">Fleet Management</a>
-                </div>
-            </div>
-
-            <div class="footer-group">
                 <h3>Contact Admin</h3>
                 <div class="footer-links">
-                    <p style="color: white; margin-bottom: 5px;">Server & Portal Inquiries:</p>
+                    <p style="color: white; margin-bottom: 5px;">Archival & Portal Inquiries:</p>
                     <a href="mailto:skyrimprime77@gmail.com" style="color: var(--fenz-yellow);">skyrimprime77@gmail.com</a>
                 </div>
             </div>
 
             <div class="footer-group">
-                <h3>Operational Discord</h3>
+                <h3>System Status</h3>
                 <div class="footer-links">
-                    <p style="color: white; margin-bottom: 5px;">Required for Communication:</p>
-                    <a href="https://discord.gg/JCKE2StE" target="_blank" style="color: var(--discord-blurple);">https://discord.gg/JCKE2StE</a>
+                    <p style="color: #cbd5e1; text-transform: none;">Database Status: Offline</p>
+                    <p style="color: #cbd5e1; text-transform: none;">Network Command: Terminated</p>
                 </div>
             </div>
         </div>
 
         <div class="bottom-bar">
-            <span>&copy; Fire and Emergency New Zealand // Operational Portal</span>
+            <span>&copy; Fire and Emergency New Zealand // Archive Portal</span>
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('contextmenu', event => event.preventDefault());
-        document.onkeydown = function(e) {
-            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
-                return false;
-            }
-        };
-    </script>
 </body>
 </html>
